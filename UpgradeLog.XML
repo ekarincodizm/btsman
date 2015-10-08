@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="BTSMan">
+</Property><Property Name="Solution File" Value="D:\Work\BTS\BTSMan\BTSMan.sln">
+</Property><Property Name="User Options File" Value="D:\Work\BTS\BTSMan\BTSMan.suo">
+</Property><Property Name="Date" Value="Sunday, February 10, 2013">
+</Property><Property Name="Time" Value="23:33 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="BTSMan.sln" Description="File successfully backed up as D:\Work\BTS\BTSMan\Backup\BTSMan.sln">
+</Event><Event ErrorLevel="0" Project="" Source="BTSMan.suo" Description="File successfully backed up as D:\Work\BTS\BTSMan\Backup\BTSMan.suo">
+</Event><Event ErrorLevel="1" Project="BTSMan" Source="..\BTSMan" Description="Warning: The project file is being backed up to a relative path that differs from the original solution relative path.  The difference in folder hierarchy may create problems in opening or building the backed up solution and project.">
+</Event><Event ErrorLevel="0" Project="" Source="BTSMan.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="BTSMan.sln" Description="Converted">
+</Event></UpgradeLog>

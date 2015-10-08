@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BTSMan", ".", "{9CC39386-AA7C-4CB7-AA9C-86FAD0F521CB}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "Svn"
+		SccAuxPath = "Svn"
+		SccLocalPath = "Svn"
+		SccProvider = "SubversionScc"
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/BTSMan"
+		Debug.AspNetCompiler.PhysicalPath = "..\BTSMan\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\BTSMan\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/BTSMan"
+		Release.AspNetCompiler.PhysicalPath = "..\BTSMan\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\BTSMan\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "7451"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CC39386-AA7C-4CB7-AA9C-86FAD0F521CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC39386-AA7C-4CB7-AA9C-86FAD0F521CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC39386-AA7C-4CB7-AA9C-86FAD0F521CB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC39386-AA7C-4CB7-AA9C-86FAD0F521CB}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

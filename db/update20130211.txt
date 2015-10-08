@@ -1,0 +1,5 @@
+ALTER TABLE `realbts2`.`registration` ADD COLUMN `transaction_code` VARCHAR(20) NOT NULL DEFAULT ''  AFTER `transaction_id` ;
+
+ALTER TABLE `realbts2`.`user` ADD COLUMN `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT  AFTER `username` 
+, ADD UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) ;
+

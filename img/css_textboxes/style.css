@@ -1,0 +1,55 @@
+/*  --->  Design by 0tutor.com  <---  */
+input
+{
+	border: 1px solid #fff;
+	color: #525252;
+	font-weight: bold;
+	font-family: "Lucida Grande",Verdana,sans-serif;
+	font-size:24px;
+	height: 30px;
+	width: 300px;
+	padding-left: 5px;
+	padding-top:4px;
+	margin-top: 20px; margin-left: 20px;
+	text-decoration: none;
+}
+
+input.lime 
+{
+background: url(imgs/lime.jpg) #ffffff repeat-x left center;
+}
+input.light_blue 
+{
+background: url(imgs/light_blue.jpg) #ffffff repeat-x left center;
+}
+input.light 
+{
+background: url(imgs/light.jpg) #ffffff repeat-x left center;
+}
+input.purple 
+{
+background: url(imgs/purple.jpg) #ffffff repeat-x left center;
+}
+input.yellow 
+{
+background: url(imgs/yellow.jpg) #ffffff repeat-x left center;
+}
+input.greenish 
+{
+background: url(imgs/greenish.jpg) #ffffff repeat-x left center;
+}
+input.laser 
+{
+background: url(imgs/laser.jpg) #ffffff repeat-x left center;
+}
+input.dark_red 
+{
+background: url(imgs/dark_red.jpg) #ffffff repeat-x left center; color:#fff;
+}
+
+.box_wrapper
+{
+width: 350px; height: 75px;
+background: url(imgs/bg.jpg);
+}
+/*  --->  Design by 0tutor.com  <---  */

@@ -1,0 +1,426 @@
+body {
+	/*font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;*/
+	font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	background: #E6EAE9;
+}
+
+
+a 
+{
+	font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #c75f3e;
+	text-decoration:none
+}
+
+a:hover 
+{
+	font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: Red;
+}
+
+
+.formTitle
+{
+	font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    /*font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;*/
+	color: #4f6b72;
+	border-left: 1px solid #C1DAD7;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 3px 3px 3px 9px;
+	background: #CAE8EA url(../../img/sys/bg_header.jpg) no-repeat;
+	vertical-align: top;
+}
+
+#mytable {
+	width: 700px;
+	padding: 0;
+	margin: 0;
+}
+
+caption {
+	padding: 0 0 5px 0;
+	width: 700px;	 
+	font: italic 15px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+}
+
+th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-left: 1px solid #C1DAD7;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 3px 3px 3px 9px;
+	background: #CAE8EA url(../../img/sys/bg_header.jpg) no-repeat;
+	vertical-align: top;
+}
+
+th.cardheader {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-left: 1px solid #C1DAD7;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 3px 3px 3px 9px;
+	background: #CAE8EA url(../../img/sys/bg_header.jpg) no-repeat;
+	vertical-align: top;
+}
+
+th.nobg {
+	border-top: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;	
+}
+
+.td1 {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 3px 3px 3px 9px;
+	color: #4f6b72;
+	vertical-align: top;	
+}
+
+.td1_grey {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #E7E7E7;
+	padding: 3px 3px 3px 9px;
+	color: #4f6b72;
+	vertical-align: top;	
+}
+
+.td1_red {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #f5cfcf;
+	padding: 3px 3px 3px 9px;
+	color: #4f6b72;
+	vertical-align: top;	
+}
+
+td.alt {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	padding: 3px 3px 3px 9px;
+	background: #F5FAFA;
+	color: #797268;
+	vertical-align: top;	
+}
+
+th.spec {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #FFF url(../../img/sys/bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	vertical-align: top;
+}
+
+th.spec_top {
+	border-left: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	background: #FFF url(../../img/sys/bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	vertical-align: top;
+}
+
+th.specalt {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa url(../../img/sys/bullet2.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #797268;
+	text-align: left;
+	vertical-align: top;	
+}
+
+.thspec_grey {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #E7E7E7;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	vertical-align: top;
+}
+
+.thspec_red {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5cfcf;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	vertical-align: top;
+}
+
+
+.txtbox1 {
+	BORDER-RIGHT: #000000 1px solid; 
+	PADDING-RIGHT: 4px; 
+	BORDER-TOP: #000000 1px solid; 
+	PADDING-LEFT: 4px; FONT-SIZE: 8pt; 
+	PADDING-BOTTOM: 1px; BORDER-LEFT: #000000 1px solid; 
+	COLOR: #000000; PADDING-TOP: 1px; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	FONT-FAMILY: Tahoma; 
+	BACKGROUND-COLOR: #f1f1f1;
+}
+
+
+.txtbox2 {
+	BORDER-RIGHT: #000000 1px solid; 
+	PADDING-RIGHT: 4px; 
+	BORDER-TOP: #000000 1px solid; 
+	PADDING-LEFT: 4px; FONT-SIZE: 8pt; 
+	PADDING-BOTTOM: 1px; BORDER-LEFT: #000000 1px solid; 
+	COLOR: #000000; PADDING-TOP: 1px; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	FONT-FAMILY: Tahoma; 
+	BACKGROUND-COLOR: #f1f1f1;
+	background-image:url('../../img/sys/magnifying-glass.gif');
+	background-repeat:no-repeat;
+	padding-left:20px;
+
+}
+
+
+
+.txtarea1 {
+	BORDER-RIGHT: #000000 1px solid; 
+	PADDING-RIGHT: 4px; 
+	BORDER-TOP: #000000 1px solid; 
+	PADDING-LEFT: 4px; FONT-SIZE: 8pt; 
+	PADDING-BOTTOM: 1px; BORDER-LEFT: #000000 1px solid; 
+	COLOR: #000000; PADDING-TOP: 1px; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	FONT-FAMILY: Tahoma; 
+	BACKGROUND-COLOR: #f1f1f1;
+}
+
+
+.chb1
+{
+	color: #000000;
+	background-color: #e7f2f5;
+	cursor: pointer;
+}
+
+
+.btn1
+{
+	color: #000000;
+	font-size: 10px;
+	font-family: MS Sans Serif;
+	background-color: #e7f2f5;
+	cursor: pointer;
+}
+
+.btn1:hover{
+background-color: #CAE8EA;
+}
+
+
+.td2 {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	padding: 3px 3px 3px 9px;
+	color: #000000;
+	vertical-align: text-top;	
+	font: normal 9px Arial;
+}
+
+.td2_2 {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	padding: 3px 3px 3px 9px;
+	color: #000000;
+	vertical-align: text-top;	
+	font: normal 9px Arial;
+	cursor: pointer;
+	background: #D5EAEA;
+}
+
+th.spec_2 {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #D5EAEA url(../../img/sys/bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+
+#modalPage{
+display: none;
+position: fixed;
+width: 100%;
+height: 100%;
+top: 0px;
+left: 0px;
+}
+
+.modalBackground{
+filter: Alpha(Opacity=80);
+-moz-opacity:0.8;
+opacity: 0.8;
+width: 100%;
+height: 100%;
+background-color: #999999;
+position: fixed;
+z-index: 500;
+top: 0px;
+left: 0px;
+}
+
+.modalContainer
+{
+background-color: white;
+border: solid 4px black;
+position: absolute;
+top: 35%;
+left: 38%;
+z-index: 1000;
+width: 250px;
+height: 100px;
+padding: 0px;
+}
+
+.modalTitle
+{
+width: 242px;
+background-color: #009900;
+padding: 4px;
+color: #ffffff;
+text-align: right;
+cursor:pointer;
+}
+
+.modalBody
+{
+padding: 10px;
+}
+
+
+
+
+
+
+.font01
+{
+	font: 11px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	
+}
+.font02
+{
+	font: 11px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+}
+
+.font1
+{
+	font: normal 11px sans-serif;
+	color: #4f6b72;
+	letter-spacing: 1px;
+	text-transform: none;
+}
+
+.font1b
+{
+	font: bold 11px sans-serif;
+	color: #4f6b72;
+	letter-spacing: 1px;
+	text-transform: none;
+}
+
+.font2 {
+	color: #c75f3e;
+	text-decoration:none
+}
+
+.font3
+{
+	font: normal 11px sans-serif;
+	color: #e75f3e;
+	letter-spacing: 1px;
+	text-transform: none;
+}
+
+.img1
+{
+	max-width: 100px;
+	max-height: 120px;
+}
+
+.tabhead1
+{
+	background-color:#CAE8EA;
+	cursor:pointer;
+}
+
+
+.tabhead1:hover
+{
+	background-color:#f5fafa;
+	cursor:pointer;
+}
+
+.tabhead1_selected
+{
+	background-color:#f5fafa;
+	cursor:pointer;	
+	BORDER-TOP: #C1DAD7 1px solid;
+	BORDER-LEFT: #C1DAD7 1px solid;
+	BORDER-RIGHT: #C1DAD7 1px solid;
+}
+
+.tabpane1
+{
+	background-color:#f5fafa;	
+	BORDER-LEFT: #C1DAD7 1px solid;
+	BORDER-RIGHT: #C1DAD7 1px solid;
+
+}
+
+.tabpane1_bottom
+{
+	background-color:#f5fafa;
+	BORDER-BOTTOM: #C1DAD7 1px solid;
+	BORDER-LEFT: #C1DAD7 1px solid;
+	BORDER-RIGHT: #C1DAD7 1px solid;
+
+}
+
+.graydiv  
+{  
+  position: absolute;  
+  background-color: #5B5B5B;  
+  left: 0px;  
+  top: 0px;  
+  z-index: 10000;  
+  display: none;  
+}  
+
+.ModalBackground  
+{  
+  background-color: #357000;  
+  filter: alpha(opacity=70);  
+  opacity: 0.7;  
+}  
