@@ -22,10 +22,10 @@
     </sectionGroup>
   </configSections>
   <appSettings>
-    <add key="BTSConfig" value="C:/Inetpub/vhosts/jsspt.com/httpdocs/config/BTSConfig.prod.ini" />
+    <add key="BTSConfig" value="C:/Inetpub/vhosts/accbts.com/httpdocs/config/BTSConfig.prod.ini" />
   </appSettings>
   <connectionStrings>
-    <add name="LocalMySqlServer" connectionString="DRIVER={MySQL ODBC 3.51 Driver};SERVER=localhost;DATABASE=bts;UID=btsadmin;PASSWORD=btsman;CHARSET=tis620;OPTION=3" />
+    <add name="LocalMySqlServer" connectionString="DRIVER={MySQL ODBC 3.51 Driver};SERVER=mysql-5.5.chaiyohosting.com;DATABASE=bts;UID=btsadmin;PASSWORD=btsman;CHARSET=tis620;OPTION=3" />
   </connectionStrings>
   <system.web>
     <!-- 
