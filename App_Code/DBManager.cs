@@ -27,8 +27,9 @@ namespace BTS.DB
         protected OdbcConnection _con = null;
         protected OdbcTransaction _trans = null;
 
-        protected string _conString = 
+        protected string _conString =
                          //"DRIVER={MySQL ODBC 5.2w Driver};" +
+                         // "DRIVER={MySQL ODBC 3.51 Driver};" +
                          "DRIVER={MySQL ODBC 3.51 Driver};" +
                          "SERVER=localhost;" +
                          "DATABASE=bts;" +
@@ -37,10 +38,11 @@ namespace BTS.DB
                          "OPTION=3";
 
         protected Logger _log = null;
+        protected Logger _mlog = null;
 
         public DBManager()
         {
-            SetLogger(Logger.GetLogger(Config.SQLLOG));
+            SetLogger();
         }
 
 
@@ -81,7 +83,7 @@ namespace BTS.DB
                 _trans.Commit();
             }
         }
-        
+
         public void Rollback()
         {
             if (_trans != null)
@@ -93,7 +95,7 @@ namespace BTS.DB
         public OdbcDataReader Query(string sql)
         {
             Log(SQLLogger.ALL, sql);
-            
+
             if (_con.State != ConnectionState.Open) this.Connect();
 
             OdbcCommand cmd = _con.CreateCommand();
@@ -153,6 +155,8 @@ namespace BTS.DB
         {
             Log(SQLLogger.ONLY_CHANGE, sql);
 
+            if (_con.State != ConnectionState.Open) this.Connect();
+
             OdbcCommand cmd = _con.CreateCommand();            
             if (_trans != null)
             {
@@ -209,9 +213,10 @@ namespace BTS.DB
             return Execute(sql);
         }
 
-        public void SetLogger(Logger logger)
+        public void SetLogger()
         {
-            _log = logger;
+            _log = Logger.GetLogger(Config.SQLLOG);
+            _mlog = Logger.GetLogger(Config.MAINLOG);
         }
 
         protected void Log(uint serv, string sql)

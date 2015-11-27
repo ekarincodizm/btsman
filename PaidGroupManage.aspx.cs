@@ -111,7 +111,7 @@ namespace BTS.Page
 
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             int numRec = db.QueryCount("SELECT Count(*) FROM paid_group " + GetQSearchSQL(searchStr));
 
             OdbcDataReader reader = db.Query("SELECT * FROM paid_group " + GetQSearchSQL(searchStr) + " LIMIT " + Config.TBRECORD_PER_PAGE + " OFFSET " + (((pg - 1) * Config.TBRECORD_PER_PAGE)));
@@ -188,7 +188,7 @@ namespace BTS.Page
             group._rateInfo = PaidRateInfo.Parse(group._rawRateInfo);
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             group.AddToDB(db);
             db.Close();
@@ -196,14 +196,14 @@ namespace BTS.Page
 
         public void DoAddPaidGroup()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             groupList = PaidGroup.LoadListFromDB(db, "");
             //teacherList = Teacher.LoadListFromDB(db, " WHERE is_active=1 ORDER BY firstname");
             db.Close();
         }
         public void DoEditPaidGroup(string groupID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             thePaidGroup = new PaidGroup();
             if (!thePaidGroup.LoadFromDB(db, "paid_group_id='" + groupID + "'")) thePaidGroup = null;
             
@@ -236,7 +236,7 @@ namespace BTS.Page
             group._rateInfo = PaidRateInfo.Parse(group._rawRateInfo);
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             group.UpdateToDB(db);
             db.Close();
@@ -248,7 +248,7 @@ namespace BTS.Page
             PaidGroup group = new PaidGroup();
             group._paidGroupID = Int32.Parse(paidGroupID);
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             group.AddTeacherToDB(db, teacherID);
             db.Close();
@@ -259,7 +259,7 @@ namespace BTS.Page
             PaidGroup group = new PaidGroup();
             group._paidGroupID = Int32.Parse(paidGroupID);
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             group.RemoveTeacherToDB(db, teacherID);
             db.Close();
@@ -272,7 +272,7 @@ namespace BTS.Page
             PaidGroup group = new PaidGroup();
             group._paidGroupID = Int32.Parse(groupID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             group.DeleteToDB(db);
             db.Close();
@@ -282,7 +282,7 @@ namespace BTS.Page
             if (role_id <= 0) return "";
             string sql = "SELECT name FROM role WHERE role_id='" + role_id + "'";
             string ret = String.Empty;
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query(sql);
             reader.Read();
@@ -296,7 +296,7 @@ namespace BTS.Page
             if (branch_id <= 0) return "";
             string sql = "SELECT branch_name FROM branch WHERE branch_id='" + branch_id + "'";
             string ret = String.Empty;
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query(sql);
             reader.Read();

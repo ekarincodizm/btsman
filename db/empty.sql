@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `bts` /*!40100 DEFAULT CHARACTER SET tis620 COLLATE tis620_bin */;
-USE `bts`;
+-- CREATE DATABASE  IF NOT EXISTS `bts` /*!40100 DEFAULT CHARACTER SET tis620 COLLATE tis620_bin */;
+USE `bts2`;
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bts
@@ -502,7 +502,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('kizze',11,'cc03e747a6afbbcbf8be7668acfebee5',3,'Kittipong','test123',1,1),('netta',15,'cc03e747a6afbbcbf8be7668acfebee5',1,'Weerawat','Seetalalai',1,1),('root',25,'4abfba1ab7fa0285a1784f42d6a38b56',1,'root','root',1,2);
+INSERT INTO `user` VALUES ('kizze',11,'cc03e747a6afbbcbf8be7668acfebee5',3,'Kittipong','test123',1,1),('netta',15,'cc03e747a6afbbcbf8be7668acfebee5',1,'Weerawat','Seetalalai',1,1),('root',25,'4abfba1ab7fa0285a1784f42d6a38b56',1,'root','root',1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

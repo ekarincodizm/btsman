@@ -134,7 +134,7 @@ namespace BTS.Page
 
         protected void DoInitPrintAll(string regisTransactionID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             outBuf = new StringBuilder();
@@ -209,7 +209,7 @@ namespace BTS.Page
                 }
             }
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             reg.AddToDB(db);           
             db.Close();
@@ -279,7 +279,7 @@ namespace BTS.Page
             DBManager db = null;
             try
             {
-                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 db.Connect();
                 db.BeginTransaction(IsolationLevel.ReadCommitted);
 

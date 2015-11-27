@@ -108,7 +108,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listBranch = new List<Branch>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             string qSearchSQL = Branch.GetQSearchSQL(searchStr);
             if (qSearchSQL.Trim().Length > 0) qSearchSQL = " WHERE " + qSearchSQL;
 
@@ -203,7 +203,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             b.AddToDB(db);
             db.Close();
@@ -211,7 +211,7 @@ namespace BTS.Page
 
         public void DoEditBranch(string branchID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theBranch = new Branch();
             if (!theBranch.LoadFromDB(db, "branch_id=" + branchID)) theBranch = null;
 
@@ -256,7 +256,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             b.UpdateToDB(db);
             db.Close();
@@ -267,7 +267,7 @@ namespace BTS.Page
             Branch t = new Branch();
             t._branchID = Int32.Parse(branchID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.DeleteToDB(db);
             db.Close();
@@ -279,7 +279,7 @@ namespace BTS.Page
             if (string.IsNullOrEmpty(branch_id)) return list;
             string sql = "SELECT username,firstname,surname FROM user WHERE branch_id='" + branch_id + "'";
             string ret = String.Empty;
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query(sql);
 

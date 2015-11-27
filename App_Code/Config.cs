@@ -44,14 +44,15 @@ namespace BTS
         public static string DB_NAME = "bts";
         public static string DB_USER = "root";
         public static string DB_PASSWORD = "btsman";
+        public static string DB_CHAR_ENC = "tis620";
 
         // Capacity
         public static int DOWNLOADED_FILES_KEEP = 3;
 
         // Path
-        public static string PATH_APP_ROOT = "E:\\Work\\BTS\\BTSMan";
-        public static string PATH_LOG = "E:\\Work\\BTS\\BTSMan\\log\\main";
-        public static string PATH_SQLLOG = "E:\\Work\\BTS\\BTSMan\\log\\db";
+        public static string PATH_APP_ROOT = ".";
+        public static string PATH_LOG = ".\\main";
+        public static string PATH_SQLLOG = ".\\log\\db";
         // should not be changed
         public static string URL_PIC_COURSE = "img/course";
         public static string URL_PIC_TEACHER = "img/teacher";
@@ -134,6 +135,7 @@ namespace BTS
             DB_NAME = parser.GetSetting("Database", "DB_NAME");
             DB_USER = parser.GetSetting("Database", "DB_USER");
             DB_PASSWORD = parser.GetSetting("Database", "DB_PASSWORD");
+            DB_CHAR_ENC = parser.GetSetting("Database", "DB_CHAR_ENC");
 
             // Capacity
             DOWNLOADED_FILES_KEEP = Int32.Parse(parser.GetSetting("Capacity", "DOWNLOADED_FILES_KEEP"));

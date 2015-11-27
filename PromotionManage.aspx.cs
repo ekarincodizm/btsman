@@ -108,7 +108,7 @@ namespace BTS.Page
             string grey = "class=\"thspec_grey\"";
 
             listPromotion = new List<Promotion>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             
             
             string qSearchSQL = Promotion.GetQSearchSQL(searchStr);
@@ -187,7 +187,7 @@ namespace BTS.Page
         public void DoAddPromotion()
         {
             
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             PrintCourseOption(db);
             db.Close();
              
@@ -227,7 +227,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             p.AddToDB(db);
             db.Close();
@@ -308,7 +308,7 @@ namespace BTS.Page
 
         public void DoEditPromotion(string promotionID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             thePromotion = new Promotion();
             if (!thePromotion.LoadFromDB(db, "promotion_id=" + promotionID)) thePromotion = null;
 
@@ -352,7 +352,7 @@ namespace BTS.Page
                     
             
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             p.UpdateToDB(db);
             db.Close();
@@ -363,7 +363,7 @@ namespace BTS.Page
             Promotion t = new Promotion();
             t._promotionID = Int32.Parse(promotionID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.DeleteToDB(db);
             db.Close();

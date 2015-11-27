@@ -14,6 +14,7 @@ using System.Web.UI.HtmlControls;
 
 using BTS.DB;
 using BTS.Util;
+using System.Reflection;
 
 /// <summary>
 /// Summary description for User
@@ -43,6 +44,8 @@ namespace BTS.Entity
         public string _quiz;
         public DateTime _create_date;
         public bool _isActive;
+
+        public static Logger log = Logger.GetLogger(Config.MAINLOG);
 
         public Student()
         {
@@ -139,11 +142,20 @@ namespace BTS.Entity
 
         
         public static bool CreateForm(OdbcDataReader reader, Student student)
-        {           
+        {
+
+            FieldInfo[] fields = reader.GetType().GetFields(
+                                     BindingFlags.NonPublic |
+                                     BindingFlags.Instance);
+            PropertyInfo[] props = reader.GetType().GetProperties(
+                                     BindingFlags.NonPublic |
+                                     BindingFlags.Instance);
+
             int fCount = reader.FieldCount;
             for (int i = 0; i < fCount; i++)
             {
                 string name = reader.GetName(i);
+                //Console.WriteLine(name + reader.GetValue(i));
 
                 // Map to DB field. Need to change if db changed
                 switch (name) {
@@ -165,8 +177,21 @@ namespace BTS.Entity
                                       break;
                     case "birthday": student._birthday = new DateTime(reader.GetDate(i).Ticks);
                                       break;
-                    case "firstname": student._firstname = reader.GetString(i);
-                                      break;
+                    case "firstname":
+                        /*                        
+                                                string s= reader.GetDataTypeName(i);
+                                                byte[] b = new byte[8];
+                                                reader.GetBytes(i, 0, b, 0, b.Length);
+                                                //  student._firstname = reader.GetString(i);
+                                                for (int j=0;j<b.Length;j++)
+                                                {
+                                                    log.PutLine(Logger.INFO, b[j] + " ");                                 
+                                                }
+                                                student._firstname = Encoding.GetEncoding("tis-620").GetString(b);
+                                                log.PutLine(Logger.INFO,"ไทยไทย" + student._firstname);
+                        */
+                                    student._firstname = reader.GetString(i);
+                                    break;
                     case "surname": student._surname = reader.GetString(i);
                                       break;
                     case "nickname": student._nickname = reader.GetString(i);
@@ -292,6 +317,7 @@ namespace BTS.Entity
 
         public bool LoadFromDBCustom(DBManager db, string sqlAll)
         {
+
             OdbcDataReader reader = db.Query(sqlAll);
             if (!reader.Read()) return false;
             return Student.CreateForm(reader, this);

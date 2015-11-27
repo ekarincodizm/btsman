@@ -104,7 +104,7 @@ namespace BTS.Entity
 
         public static int GetMaxRecord()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query("SELECT MAX(teacher_id) FROM teacher");
 

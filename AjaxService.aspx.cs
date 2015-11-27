@@ -167,7 +167,7 @@ namespace BTS.Page
 
         protected void ProcessWizQueryCourses(string searchStr)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
 
             String subQuery = " (SELECT count(*) FROM registration r WHERE r.status=0 AND r.course_id=c.course_id) ";
             String sql = "SELECT c.*," + subQuery + " AS num_registered from course c WHERE " + Course.GetQSearchSQL(searchStr);
@@ -194,7 +194,7 @@ namespace BTS.Page
 
         protected void ProcessWizQueryCourseDetail(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Course c = new Course(); 
             c.LoadFromDB(db, " course_id="+courseID);
             c.LoadTeacher(db);
@@ -253,7 +253,7 @@ namespace BTS.Page
                 LinkedList<Course> copyCourses = new LinkedList<Course>(courses);
 
                 // find matching promotions
-                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 
                 PromotionMatcher matcher = Promotion.LoadFromDBByMatchingCourses(db, reg._courses);
                 db.Close();
@@ -346,7 +346,7 @@ namespace BTS.Page
             if (reg == null) { reg = new RegisTransaction(); }
 
                         
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Course course = new Course();
             course.LoadFromDB(db," course_id=" + course_id);
             db.Close();
@@ -379,7 +379,7 @@ namespace BTS.Page
 
         protected void ProcessWizQueryStudents(string searchStr)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Student[] students = Student.LoadListFromDBCustom(db, "SELECT * from student s WHERE " + Student.GetQSearchSQL(searchStr));
             db.Close();
 
@@ -396,7 +396,7 @@ namespace BTS.Page
 
         protected void ProcessWizQueryStudentDetail(string studentID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Student s = new Student();
             s.LoadFromDB(db, " student_id=" + studentID);
             db.Close();
@@ -436,7 +436,7 @@ namespace BTS.Page
             }
 
             // Query registration history
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Registration[] reghis = Registration.LoadListFromDBCustom(db, "SELECT rg.*, c.bts_course_id as bts_course_id, c.course_name as course_name FROM registration rg, course c WHERE "
                         + " student_id="+reg._student._studentID+" AND rg.course_id=c.course_id ORDER BY rg.regis_id ");
             db.Close();
@@ -499,7 +499,7 @@ namespace BTS.Page
             if (reg == null) { reg = new RegisTransaction(); }
 
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             Student student = new Student();
             student.LoadFromDB(db, " student_id=" + student_id);
             db.Close();

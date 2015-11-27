@@ -112,7 +112,7 @@ namespace BTS.Page
         {
             outBuf = new StringBuilder();
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theStudent = new Student();
             theStudent.LoadFromDB(db, " student_id=" + studentID);
 
@@ -214,7 +214,7 @@ namespace BTS.Page
 
         protected String DoSaveStudentListAsExcel()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
 
             String prefix = "students_";
             int numDel = DeleteOldReportFile(prefix);
@@ -337,7 +337,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listStudent = new List<Student>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             string qSearchSQL = Student.GetQSearchSQL(searchStr);
             if (qSearchSQL.Trim().Length > 0)
             {
@@ -474,7 +474,7 @@ namespace BTS.Page
             DBManager db = null;
             try
             {
-                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 db.Connect();
 
                 // validate
@@ -506,7 +506,7 @@ namespace BTS.Page
 
         public void DoEditStudent(string studentID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theStudent = new Student();
             if (!theStudent.LoadFromDB(db, "student_id=" + studentID)) theStudent = null;
 
@@ -591,7 +591,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.UpdateToDB(db);
             db.Close();
@@ -604,7 +604,7 @@ namespace BTS.Page
             Student t = new Student();
             t._studentID = Int32.Parse(studentID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.DeleteToDB(db);
             db.Close();

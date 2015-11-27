@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
+using BTS.Util;
+using System.Reflection;
 /// <summary>
 /// Summary description for MySQLDBManager
 /// </summary>
@@ -20,19 +22,21 @@ namespace BTS.DB
     public class MySQLDBManager : DBManager
     {
         protected string ODBC_MYSQL_DRIVER351 = "MySQL ODBC 3.51 Driver";
-        protected string ODBC_MYSQL_DRIVER52w = "MySQL ODBC 5.1 Driver";
+        protected string ODBC_MYSQL_DRIVER51 = "MySQL ODBC 5.1 Driver";
+        protected string ODBC_MYSQL_DRIVER53unicode = "MySQL ODBC 5.3 Unicode Driver";
+        
 
-
-        public MySQLDBManager(string server, string dbName,string user,string passwd  ) : base()
+        public MySQLDBManager(string server, string dbName,string user,string passwd, string charenc) : base()
         {
 
-            _conString = "DRIVER={" + ODBC_MYSQL_DRIVER351 + "};" +
+            _conString = "DRIVER={" + ODBC_MYSQL_DRIVER51 + "};" +
                          "SERVER="+server+";" +
                          "DATABASE="+dbName+";" +
                          "UID="+user+";" +
                          "PASSWORD="+passwd+";" +
-                         //"CHARSET=utf8;"+
-                         "CHARSET=tis620;" +
+                         "Port=3306;" +
+                         // "CHARSET=u;"+
+                         "CharSet=" + charenc + ";" +
                          "OPTION=3";
             /*
             System.Configuration.Configuration rootWebConfig =
@@ -53,7 +57,19 @@ namespace BTS.DB
             */
             try
             {
+                //_mlog.PutLine(Logger.INFO, "Connecting to db: "+_conString);
                 _con = new OdbcConnection(_conString);
+
+                FieldInfo[] fields = _con.GetType().GetFields(
+                                         BindingFlags.NonPublic |
+                                         BindingFlags.Instance);
+                PropertyInfo[] props = _con.GetType().GetProperties(
+                                         BindingFlags.NonPublic |
+                                         BindingFlags.Instance);
+                MemberInfo[] mems = _con.GetType().GetMembers(
+                                         BindingFlags.NonPublic |
+                                         BindingFlags.Instance);
+
             }
             catch (Exception e)
             {

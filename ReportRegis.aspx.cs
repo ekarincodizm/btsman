@@ -85,7 +85,7 @@ namespace BTS.Report
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
  //           listRegistration = new List<Registration>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             if (searchStr.Trim().Length > 0) searchStr = " WHERE " + searchStr;
             int numRec = db.QueryCount("SELECT Count(*) FROM registration " + searchStr);
 

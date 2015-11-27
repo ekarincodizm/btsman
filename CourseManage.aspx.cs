@@ -139,7 +139,7 @@ namespace BTS.Page
 
         protected void DoViewCourse(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theCourse = new Course();
             theCourse.LoadFromDB(db, " course_id=" + courseID);
             theCourse.LoadTeacher(db);
@@ -207,7 +207,7 @@ namespace BTS.Page
 
         protected String DoInitPrintStudentList(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theCourse = new Course();
             theCourse.LoadFromDB(db);
 
@@ -266,7 +266,7 @@ namespace BTS.Page
 
         protected String DoSaveStudentListAsExcel(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theCourse = new Course();
             theCourse._courseID = Int32.Parse(courseID);
             theCourse.LoadFromDB(db);
@@ -426,7 +426,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listCourse = new List<Course>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             
             
             string qSearchSQL = Course.GetQSearchSQL(searchStr);
@@ -531,7 +531,7 @@ namespace BTS.Page
 
         public void DoAddCourse()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             roomList = Room.LoadListFromDBCustom(db, "SELECT r.room_id, r.name, b.branch_name as branch_name FROM room r, branch b WHERE r.branch_id=b.branch_id");
             teacherList = Teacher.LoadListFromDB(db, " ORDER BY firstname");
             paidGroupList = paidGroupList = PaidGroup.LoadListFromDB(db, " ORDER BY paid_group_id");
@@ -589,7 +589,7 @@ namespace BTS.Page
                 }
             }
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             // Validate if bts code okay
             Course[] dupBTSCourse = Course.LoadListFromDBCustom(db, "SELECT * FROM course c, payment p WHERE bts_course_id='" + c._btsCourseID + "' AND c.course_id=p.course_id AND (p.sum_max_payable>p.sum_paid_cost OR p.sum_max_payable=0)");
@@ -619,7 +619,7 @@ namespace BTS.Page
 
         public void DoEditCourse(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theCourse = new Course();
             if (!theCourse.LoadFromDB(db, "course_id=" + courseID)) theCourse = null;
 
@@ -683,7 +683,7 @@ namespace BTS.Page
             }
 
             
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             // Validate if bts code okay
             Course[] dupBTSCourse = Course.LoadListFromDBCustom(db, "SELECT * FROM course c, payment p WHERE bts_course_id='" + c._btsCourseID + "' AND c.course_id=p.course_id AND c.course_id<>" + c._courseID + " AND (p.sum_max_payable>p.sum_paid_cost OR p.sum_max_payable=0)");
@@ -704,7 +704,7 @@ namespace BTS.Page
             t._courseID = Int32.Parse(courseID);
             DBManager db = null;
             try {
-                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 db.Connect();
                 
                 // Check if payment id paid all

@@ -135,7 +135,7 @@ namespace BTS.Page
 
         protected void LoadData(string startDateString, string endDateString, string paidMethod, string branchRegisedID, String branchID, String username)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             // Load branchlist
@@ -347,7 +347,7 @@ namespace BTS.Page
 
         protected String DoSaveDailyAsExcel()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
 
             String prefix = "registration_report_";
             int numDel = DeleteOldReportFile(prefix);

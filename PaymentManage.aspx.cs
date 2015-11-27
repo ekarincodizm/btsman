@@ -106,7 +106,7 @@ namespace BTS.Page
 
         protected void DoInitPrintReceiptPaymentData(string paymentID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             PaymentHistory pm = new PaymentHistory();
@@ -185,7 +185,7 @@ namespace BTS.Page
             string receiverTeacherID = Request["receiver_teacher_id"];
             AppUser user = (AppUser)Session[SessionVar.USER];
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             db.BeginTransaction(IsolationLevel.ReadCommitted);
 
@@ -216,7 +216,7 @@ namespace BTS.Page
 
         protected void DoViewPayment(string courseID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             thePayment = new Payment();
@@ -302,7 +302,7 @@ namespace BTS.Page
             string red = "class=\"thspec_red\"";
 
             listPayment = new List<Payment>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             AppUser user = (AppUser)Session[SessionVar.USER];
@@ -405,7 +405,7 @@ namespace BTS.Page
         {
 
             DBManager db;
-            db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             listTeacher = Teacher.LoadListFromDB(db, " WHERE is_active=1 ORDER BY firstname ");
@@ -506,7 +506,7 @@ namespace BTS.Page
         /*
         public void DoAddPayment()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             roomList = Room.LoadListFromDBCustom(db, "SELECT r.room_id, r.name, b.branch_name as branch_name FROM room r, branch b WHERE r.branch_id=b.branch_id");
             teacherList = Teacher.LoadListFromDB(db, " ORDER BY firstname");
             db.Close();
@@ -561,7 +561,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             c.AddToDB(db);
             db.Close();
@@ -569,7 +569,7 @@ namespace BTS.Page
 
         public void DoEditPayment(string paymentID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             thePayment = new Payment();
             if (!thePayment.LoadFromDB(db, "payment_id=" + paymentID)) thePayment = null;
 
@@ -629,7 +629,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             c.UpdateToDB(db);
             db.Close();
@@ -640,7 +640,7 @@ namespace BTS.Page
             Payment t = new Payment();
             t._paymentID = Int32.Parse(paymentID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.DeleteToDB(db);
             db.Close();

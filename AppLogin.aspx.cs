@@ -15,6 +15,7 @@ using BTS.Constant;
 using BTS.DB;
 using BTS.Entity;
 using BTS.Util;
+using System.Collections.Generic;
 
 namespace BTS.Page
 {
@@ -93,9 +94,44 @@ namespace BTS.Page
 
         }
 
+        public static List<String> GetSystemDriverList()
+        {
+            List<string> names = new List<string>();
+            // get system dsn's
+            Microsoft.Win32.RegistryKey reg = (Microsoft.Win32.Registry.LocalMachine).OpenSubKey("Software");
+            if (reg != null)
+            {
+                reg = reg.OpenSubKey("ODBC");
+                if (reg != null)
+                {
+                    reg = reg.OpenSubKey("ODBCINST.INI");
+                    if (reg != null)
+                    {
+
+                        reg = reg.OpenSubKey("ODBC Drivers");
+                        if (reg != null)
+                        {
+                            // Get all DSN entries defined in DSN_LOC_IN_REGISTRY.
+                            foreach (string sName in reg.GetValueNames())
+                            {
+                                names.Add(sName);
+                            }
+                        }
+                        try
+                        {
+                            reg.Close();
+                        }
+                        catch { /* ignore this exception if we couldn't close */ }
+                    }
+                }
+            }
+
+            return names;
+        }
         protected AppUser ValidateLogin(string username, string passwd)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            List<String> list = GetSystemDriverList();
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             OdbcDataReader reader = null;
             try
             {
@@ -109,14 +145,14 @@ namespace BTS.Page
                 }
                 return null;
             }
-            catch (Exception e) { return null; }
+            catch (Exception e) { Console.WriteLine(e.StackTrace); return null; }
             finally { db.Close(reader); }                
 
         }
 
         protected Branch[] LoadAllBranches()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             try
             {                
                 Branch[] allBranches = Branch.LoadListFromDB(db, "");

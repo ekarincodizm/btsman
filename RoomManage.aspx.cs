@@ -102,7 +102,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listRoom = new List<Room>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             string whereSQL = Room.GetQSearchSQL(searchStr);
             if (whereSQL.Length > 0) whereSQL = " WHERE " + whereSQL;
 
@@ -159,7 +159,7 @@ namespace BTS.Page
 
         public void DoAddRoom()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             branchList = Branch.LoadListFromDB(db, "");
             db.Close();
         }
@@ -197,7 +197,7 @@ namespace BTS.Page
                 }
 
                 // Save to DB
-                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 db.Connect();
                 r.AddToDB(db);
                 db.Close();
@@ -214,7 +214,7 @@ namespace BTS.Page
 
         public void DoEditRoom(string roomID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theRoom = new Room();
             if (!theRoom.LoadFromDB(db, "room_id=" + roomID)) theRoom = null;
 
@@ -256,7 +256,7 @@ namespace BTS.Page
                 }
 
                 // Save to DB
-                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+                DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
                 db.Connect();
                 r.UpdateToDB(db);
                 db.Close();
@@ -273,7 +273,7 @@ namespace BTS.Page
             Room t = new Room();
             t._roomID = Int32.Parse(roomID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.DeleteToDB(db);
             db.Close();

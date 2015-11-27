@@ -89,7 +89,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listUser = new List<AppUser>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             int numRec = db.QueryCount("SELECT Count(*) FROM user " + GetQSearchSQL(searchStr));
 
             OdbcDataReader reader = db.Query("SELECT * FROM user " + GetQSearchSQL(searchStr) + " LIMIT " + Config.TBRECORD_PER_PAGE + " OFFSET " + (((pg - 1) * Config.TBRECORD_PER_PAGE)));
@@ -151,7 +151,7 @@ namespace BTS.Page
             u._branchID = Int32.Parse(Request["branch_id"]);
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             try
             {
@@ -166,14 +166,14 @@ namespace BTS.Page
 
         public void DoAddUser()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             roleList = Role.LoadListFromDB(db, "");
             branchList = Branch.LoadListFromDB(db, "");
             db.Close();
         }
         public void DoEditUser(string username)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theUser = new AppUser();
             if (!theUser.LoadFromDB(db, "username='" + username+ "'")) theUser = null;
 
@@ -198,7 +198,7 @@ namespace BTS.Page
             u._branchID = Int32.Parse(Request["branch_id"]);
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             u.UpdateToDB(db);
             db.Close();
@@ -209,7 +209,7 @@ namespace BTS.Page
             AppUser u = new AppUser();
             u._username = username;
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             u.DeleteToDB(db);
             db.Close();
@@ -219,7 +219,7 @@ namespace BTS.Page
             if (role_id <= 0) return "";
             string sql = "SELECT name FROM role WHERE role_id='" + role_id + "'";
             string ret = String.Empty;
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query(sql);
             reader.Read();
@@ -233,7 +233,7 @@ namespace BTS.Page
             if (branch_id <= 0) return "";
             string sql = "SELECT branch_name FROM branch WHERE branch_id='" + branch_id + "'";
             string ret = String.Empty;
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             OdbcDataReader reader = db.Query(sql);
             reader.Read();
