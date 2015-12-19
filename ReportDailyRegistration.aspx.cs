@@ -35,6 +35,7 @@ namespace BTS.Page
         // branch for the course
         public string branchID;
         public string userName;
+        public int status;
 
         public string branchName;
         public Registration[] reg;
@@ -89,9 +90,11 @@ namespace BTS.Page
                 branchID = Request.Form.Get("branch_id");
                 userName = Request.Form.Get("username");
                 paidMethod = Request.Form.Get("paid_method");
+                String statusVal = Request.Form.Get("status");
+                status = (statusVal == null) ? 0 : Int32.Parse(statusVal);
 
-                // Verify branch
-                if (branchRegisedID == null)
+            // Verify branch
+            if (branchRegisedID == null)
                 {
                     AppUser user = (AppUser)Session[SessionVar.USER];
                     if (!user.IsAdmin()) branchRegisedID = user._branchID.ToString(); else branchRegisedID = "0";
@@ -116,7 +119,7 @@ namespace BTS.Page
             
                 if ((actPage == null) || (actPage.Trim().Length==0) || (actPage.Equals("report")))
                 {
-                    LoadData(sdate, edate, paidMethod, branchRegisedID, branchID, userName);
+                    LoadData(sdate, edate, paidMethod, branchRegisedID, branchID, userName, status);
                     // Presentation
                     DoInitPrintDailyRegistration();
                     Session[SessionVar.PRINT_INFO] = new StringBuilder(outBuf.ToString());
@@ -124,7 +127,7 @@ namespace BTS.Page
                 }
                 else if (actPage.Equals("save_as_excel"))
                 {
-                    LoadData(sdate, edate, paidMethod, branchRegisedID, branchID, userName);
+                    LoadData(sdate, edate, paidMethod, branchRegisedID, branchID, userName, status);
 
                     String urlPath = DoSaveDailyAsExcel();
 
@@ -133,7 +136,7 @@ namespace BTS.Page
 
         }
 
-        protected void LoadData(string startDateString, string endDateString, string paidMethod, string branchRegisedID, String branchID, String username)
+        protected void LoadData(string startDateString, string endDateString, string paidMethod, string branchRegisedID, String branchID, String username, int status)
         {
             DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
@@ -224,6 +227,7 @@ namespace BTS.Page
             string selectSQl = "SELECT rg.*, b.branch_code, s.firstname as student_firstname, s.surname as student_surname, s.school as student_school, s.level as student_level, c.bts_course_id as bts_course_id, c.course_name as course_name, c.course_type as course_type, c.category as course_category, c.start_date as start_date, c.end_date as end_date "
                                + " FROM registration rg, student s, course c, branch b ";
             string whereSQL = " WHERE rg.student_id=s.student_id AND rg.course_id=c.course_id "
+                                + " AND rg.status=" + status
                                 + " AND rg.regis_date between '" + startDate.ToString("yyyy/MM/dd HH:mm:ss", ci) + "' and '" + endDate.ToString("yyyy/MM/dd HH:mm:ss", ci) + "' "
                                 + ((!paidMethod.Equals("-1")) ? " AND rg.paid_method=" + paidMethod : "")
                                 + ((!branchRegisedID.Equals("0")) ? " AND rg.branch_id=" + branchRegisedID : "")

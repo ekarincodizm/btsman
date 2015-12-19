@@ -39,7 +39,7 @@ namespace BTS.Entity
         public bool _isPaid;
 
 
-        public static string[] PAID_METHOD_TRANCODE = { "C", "K", "D", "T", "S", "V" };
+        public static string[] PAID_METHOD_TRANCODE = { "C", "D", "K", "T", "S", "V" };
         public static string[] USER_TRANCODE = { "A", "M", "F" };
 
         // raw course list

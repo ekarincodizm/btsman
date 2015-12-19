@@ -210,8 +210,8 @@
     <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>Type</th>    
     <th scope="row" class="spec" >
         <select id="course_type" name="course_type" class="txtbox1" style="width:160px" onchange="refreshStartEndDate()">
-            <option value="คอร์สสด" <%=theCourse._courseType=="คอร์สสด" ? "selected" : "" %> >คอร์สสด</option>
-            <option value="คอร์ส DVD" <%=theCourse._courseType=="คอร์ส DVD" ? "selected" : "" %> >คอร์ส DVD</option>
+            <option value="คอร์สสด" <%=theCourse != null && theCourse._courseType=="คอร์สสด" ? "selected" : "" %> >คอร์สสด</option>
+            <option value="คอร์ส DVD" <%=theCourse != null && theCourse._courseType=="คอร์ส DVD" ? "selected" : "" %> >คอร์ส DVD</option>
         </select>
     </th>
   </tr>

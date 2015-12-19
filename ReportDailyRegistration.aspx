@@ -169,7 +169,19 @@
             <% } %>
            </select>
           </td>     
-        </tr></table>
+        </tr>
+        <tr>
+            <td align="right">สถานะ</td>
+            <td>
+                <select id="status" name="status" class="txtbox1" style="width:130px" >
+                    <option value="0" <%= status==0?"selected":"" %> >ปกติ</option>
+                    <option value="1" <%= status==1?"selected":"" %> >ยกเลิก</option>
+                </select>
+
+            </td>
+        </tr>
+
+        </table>
     </td>
   </tr>
 <% if ((reg == null) || (reg.Length == 0)){ %>      
