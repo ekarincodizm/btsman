@@ -1,5 +1,5 @@
 -- CREATE DATABASE  IF NOT EXISTS `bts` /*!40100 DEFAULT CHARACTER SET tis620 COLLATE tis620_bin */;
-USE `bts2`;
+USE `bts`;
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bts
@@ -163,6 +163,7 @@ CREATE TABLE `paid_group` (
 
 LOCK TABLES `paid_group` WRITE;
 /*!40000 ALTER TABLE `paid_group` DISABLE KEYS */;
+INSERT INTO `paid_group` (`paid_group_id`, `name`, `rate_info`, `current_round`) VALUES (1, 'กลุ่มอาจารย์1', '0:100', 0);
 /*!40000 ALTER TABLE `paid_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,6 +189,7 @@ CREATE TABLE `paid_group_teacher_mapping` (
 
 LOCK TABLES `paid_group_teacher_mapping` WRITE;
 /*!40000 ALTER TABLE `paid_group_teacher_mapping` DISABLE KEYS */;
+INSERT INTO `paid_group_teacher_mapping` (`paid_group_id`, `teacher_id`) VALUES (1, 1);
 /*!40000 ALTER TABLE `paid_group_teacher_mapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,6 +399,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` (`room_id`, `name`, `branch_id`, `seat_no`, `img`, `description`) VALUES (30, 'ห้องเรียน1', 1, 50, 'noimg.jpg', '');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,7 +505,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('kizze',11,'cc03e747a6afbbcbf8be7668acfebee5',3,'Kittipong','test123',1,1),('netta',15,'cc03e747a6afbbcbf8be7668acfebee5',1,'Weerawat','Seetalalai',1,1),('root',25,'4abfba1ab7fa0285a1784f42d6a38b56',1,'root','root',1,1);
+INSERT INTO `user` VALUES ('joke', 35, '2f959fc21a0b5e77303f2ef9ed075cf0', 1, 'joke', 'joke', 1, 1),('kizze',11,'cc03e747a6afbbcbf8be7668acfebee5',3,'Kittipong','test123',1,1),('netta',15,'cc03e747a6afbbcbf8be7668acfebee5',1,'Weerawat','Seetalalai',1,1),('pang', 34, 'd99c0f4dccf8de7bee05ed3ad4c4f26a', 1, 'ศุภาวรรณ', 'ช่วยกันจักร์', 1, 1),('root',25,'4abfba1ab7fa0285a1784f42d6a38b56',1,'root','root',1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

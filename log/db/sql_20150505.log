@@ -1,1 +1,0 @@
-UPDATE student SET is_active=0 WHERE student_id=15311
