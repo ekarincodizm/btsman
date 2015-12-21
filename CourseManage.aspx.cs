@@ -438,11 +438,11 @@ namespace BTS.Page
             string filterSQL = "";
             if (filter.Equals("only_open"))
             {
-                filterSQL = "( end_date > "+ curDate +" )";
+                filterSQL = "( end_date > "+ curDate + " or course_type='คอร์ส DVD' )";
             }
             else if (filter.Equals("only_close"))
             {
-                filterSQL = "( end_date < " + curDate + " )";
+                filterSQL = "( end_date < " + curDate + " or course_type='คอร์ส DVD' )";
             }
             if (filterSQL.Length > 0) 
             {
