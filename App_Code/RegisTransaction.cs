@@ -76,11 +76,11 @@ namespace BTS.Entity
             _courses.AddLast(course);
         }
 
-        protected int GetTransationCountThisMonth(DBManager db, AppUser user, int paidMethod)
+        protected int GetTransationCountThisMonth(DBManager db, int paidMethod)
         {
             String thisMonth = DateTime.Today.ToString("yyyy-MM", new System.Globalization.CultureInfo("en-US")) + "-01";
 
-            String sql = "select count(*) as cnt from ( SELECT distinct transaction_id FROM registration WHERE branch_id='" + user._branchID + "' and paid_method="+ paidMethod +"  and regis_date >= '" + thisMonth + "') as t1";
+            String sql = "select count(*) as cnt from ( SELECT distinct transaction_id FROM registration WHERE branch_id='" + this._branchID + "' and paid_method="+ paidMethod +"  and regis_date >= '" + thisMonth + "') as t1";
             OdbcDataReader reader = db.Query(sql);
             if (reader.Read())
             {
@@ -92,19 +92,17 @@ namespace BTS.Entity
         public void CreateTransactionCode(DBManager db, DateTime regisdate)
         {
             // format
-            // 1. branch code - 2 digits
+            // 1. operating branch code - 2 digits
             // 2. paid method C/K/D/T/V
             // 3. yyMM 1302
             // 5. number of transaction this month XXX
 
-            AppUser regisUser = new AppUser();
-            regisUser.LoadFromDB(db, " username='" + _username + "'");
 
             Branch branch = new Branch();
-            branch.LoadFromDB(db, "branch_id=" + regisUser._branchID);
+            branch.LoadFromDB(db, "branch_id=" + this._branchID);
 
             // find the number of transaction for the user on this month
-            int numRegisted = GetTransationCountThisMonth(db, regisUser, _paidMethod);
+            int numRegisted = GetTransationCountThisMonth(db, _paidMethod);
 
 
 

@@ -173,6 +173,15 @@
         ajaxPost("AjaxService.aspx", "svc=<%=AjaxSvc.WIZ_DISCOUNT_COURSE%>&course_id=" + cid + "&cost=" + dcost, "c_selected");
     }    
     
+    function doBeforeFinalSubmit() {
+        if (document.getElementById("paid_method").value == "-1") {
+            alert("โปรดเลือกช่องทางการชำระเงิน");
+        } else {
+            doSubmit();
+        }
+
+    }
+
 </script>    
 
 <!-- Error box -->    
@@ -646,6 +655,7 @@
                         <td>ชำระเงินผ่านทาง</td>
                         <td colspan="2">
                             <select name="paid_method" id="paid_method" class="txtbox1">
+                                <option value="-1">None</option>
                                 <option value=0><%= Registration.GetPaidMethodText("0")%></option>
                                 <option value=1><%= Registration.GetPaidMethodText("1")%></option>
                                 <option value=2><%= Registration.GetPaidMethodText("2")%></option>
@@ -671,7 +681,7 @@
             <tr align=center width="100%"> <td> โปรดตรวจสอบข้อมูลให้ถูกต้องก่อนยืนยันการลงทะเบียน </td></tr>
             <tr align=center > 
             <td> 
-                <input type="button" class="btn1" value="ยืนยัน" onclick="setVal('actPage','submit_registration');doSubmit();"/>
+                <input type="button" class="btn1" value="ยืนยัน" onclick="setVal('actPage','submit_registration');doBeforeFinalSubmit();"/>
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 <input type="button" class="btn1" value="ยกเลิก" onclick="setVal('actPage','cancel_registration');doSubmit();"/>
             </td></tr>
