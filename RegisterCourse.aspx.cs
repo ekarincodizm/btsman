@@ -179,7 +179,13 @@ namespace BTS.Page
             // * User information comes from session NOT DB
             reg._username = user._username;
             reg._paidMethod = Int32.Parse(Request["paid_method"]);
-            reg._branchID = Int32.Parse((String)Session[SessionVar.BRANCH_SELECTED]);
+            if (Session[SessionVar.BRANCH_SELECTED] == null) {
+                reg._branchID = user._branchID;
+            } else { 
+                reg._branchID = Int32.Parse((String)Session[SessionVar.BRANCH_SELECTED]);
+                user._branchID = reg._branchID;
+                Session[SessionVar.USER] = user;
+            }
             reg._paiddate = StringUtil.getDate(Request["paid_date"]);
 
             // seat

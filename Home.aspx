@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style/<%=Config.CSS_STYLE %>" type="text/css" />    
 </head>
 <body>
-<script type="text/javascript" src="js/util.js"></script>  
+<script type="text/javascript" src="js/util.js"></script> 
 
 
 

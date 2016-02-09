@@ -101,8 +101,8 @@ function mouseMove(e){
   if (x < 0){x = 0}
   if (y < 0){y = 0}  
     
-    eval('document.getElementById(\''+layerName+'\').style.top='+(y+offsetY));
-    eval('document.getElementById(\''+layerName+'\').style.left='+(x+offsetX));
+//    eval('document.getElementById(\''+layerName+'\').style.top='+(y+offsetY));
+//    eval('document.getElementById(\''+layerName+'\').style.left='+(x+offsetX));
 
 }
 
@@ -116,36 +116,37 @@ function isInt(x) {
 // modal popup
 function closePopup()  
 {  
-    document.getElementById("divSignin").style.display="none";      
-       objDiv = document.getElementById("divg");  
-       objDiv.style.display = "none";   
+    document.getElementById("divSignin").style.display = "none";
+    document.getElementById("divSelectBranch").style.display = "none";
+ /*      objDiv = document.getElementById("divg");  
+       objDiv.style.display = "none";   */
        return false;  
 }  
 
 function showPopup()  
 {  
-    try  
-    {    
-        document.getElementById("divSignin").style.display="block";      
-        objDiv = document.getElementById("divg");  
-           objDiv.style.display = "block";   
-           objDiv.style.width = document.body.scrollWidth;  
-           objDiv.style.height= document.body.scrollHeight;           
-           fnSetDivSigninLeft("divSignin");          
-    }  
-    catch(e)  
-   {  
-        alert(e);  
-   }  
-    return false     
+    try {
+                document.getElementById("divSignin").style.display = "block"; 
+                document.getElementById("divSelectBranch").style.display = "block";
+        /*
+                objDiv = document.getElementById("divg");  
+                objDiv.style.display = "block";   
+                objDiv.style.width = document.body.scrollWidth;  
+                objDiv.style.height= document.body.scrollHeight;           
+                fnSetDivSigninLeft("divSignin");       */
+    }
+    catch (e) {
+        alert(e);
+    }
+    return false
 }  
 
 function fnSetDivSigninLeft(oElement)  
 {  
    var DivWidth = parseInt(document.getElementById(oElement).offsetWidth,10)  
    var DivHeight = parseInt(document.getElementById(oElement).offsetHeight,10)  
-   document.getElementById(oElement).style.left = (document.body.offsetWidth / 2) - (DivWidth / 2)+200;
-   document.getElementById(oElement).style.top = 400; // (document.body.offsetHeight / 2) -  ( DivHeight / 2);  
+//   document.getElementById(oElement).style.left = (document.body.offsetWidth / 2) - (DivWidth / 2)+200;
+//   document.getElementById(oElement).style.top = 400; // (document.body.offsetHeight / 2) -  ( DivHeight / 2);  
 
   return false;
 }  

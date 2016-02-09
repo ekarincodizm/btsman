@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TopBar.ascx.cs" Inherits="BTS.Control.TopBar" %>
-
+﻿
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TopBar.ascx.cs" Inherits="BTS.Control.TopBar" %>
 <%@ Import Namespace="BTS" %>
 <%@ Import Namespace="BTS.Constant" %>
 <%@ Import Namespace="BTS.Entity" %>
@@ -12,11 +12,9 @@
     }
 </script>
 <!--  breanch select popup -->
-<div id="divg" class="ModalBackground graydiv">  
-</div>  
-<div id="divSignin" style="border: '1px soild green'; display: none; z-index: 100002;  
-    width: 550px; position:absolute;" >  
-<div style="text-align:right;height:70px;width:300px;background-color:White;border:solid 1px lightyellow" style.display="none">  
+<div id="divSignin" name="divSignin" style="width: 100%; height: 100%; position: absolute; left: 0%; top: 0%; margin-left: 0px; margin-top: 0px; display:none" class="modalBackground" >
+    
+<div  id="divSelectBranch" name="divSelectBranch" style="text-align:right;height:70px;width:300px;background-color:White;border:solid 1px lightyellow;position: absolute; left: 50%; top: 50%; display:none">  
 <table align=center width="100%">
 <tr>
 <td align=center>เลือกสาขาที่จะปฏิบัติงาน: 
