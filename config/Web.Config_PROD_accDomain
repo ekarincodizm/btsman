@@ -15,7 +15,7 @@
     />
 -->
 
-
+    <customErrors mode="Off" />
   </system.web>
   <connectionStrings>
     <remove name="LocalSqlServer" />
