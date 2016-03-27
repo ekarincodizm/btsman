@@ -8,6 +8,8 @@
 <%@ Import Namespace="BTS.Constant" %>
 <%@ Import Namespace="BTS.Entity" %>
 <%@ Import Namespace="BTS.Util" %>
+<%@ Import Namespace="System.Globalization" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -666,7 +668,7 @@
                         </td>
                       <td>วันที่รับชำระเงิน</td>
                       <td>
-                            <input id="paid_date" name="paid_date" type="text" class="txtbox1" width="150px" readonly value="<%=DateTime.Today.ToString("dd/MM/yyyy", ci)%>"/>                           
+                            <input id="paid_date" name="paid_date" type="text" class="txtbox1" width="150px" readonly value="<%=DateTime.Today.ToString("dd/MM/yyyy", new CultureInfo("en-EN"))%>"/>                           
                       </td>
                     </tr>  
                     <tr>

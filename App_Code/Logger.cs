@@ -80,55 +80,74 @@ namespace BTS.Util
             if (_level < severity)
                 return;
 
-            OpenFile();
-            _writer.Write(GetSeverityString(severity) + str);
-            _writer.Flush();
-
-            if ((severity == Logger.ERROR) && (_separateError))
+            try
             {
-                _writer_err.Write(GetSeverityString(severity) + str);
-                _writer_err.Flush();
+
+                OpenFile();
+                _writer.Write(GetSeverityString(severity) + str);
+                _writer.Flush();
+
+                if ((severity == Logger.ERROR) && (_separateError))
+                {
+                    _writer_err.Write(GetSeverityString(severity) + str);
+                    _writer_err.Flush();
+                }
             }
-            CloseOpeningWriter();
+            catch (Exception e)
+            {
+                CloseOpeningWriter();
+            }
         }
         // writeline severe + str
         public void WriteLine(uint severity, string str)
         {
+
             if (_level < severity)
                 return;
 
-            OpenFile();
-            _writer.Write(GetSeverityString(severity));
-            _writer.WriteLine(str);
-            _writer.Flush();
+            try { 
 
-            if ((severity == Logger.ERROR) && (_separateError))
-            {
-                _writer_err.Write(GetSeverityString(severity));
-                _writer_err.WriteLine(str);
-                _writer_err.Flush();
+                OpenFile();
+                _writer.Write(GetSeverityString(severity));
+                _writer.WriteLine(str);
+                _writer.Flush();
+
+                if ((severity == Logger.ERROR) && (_separateError))
+                {
+                    _writer_err.Write(GetSeverityString(severity));
+                    _writer_err.WriteLine(str);
+                    _writer_err.Flush();
+                }
             }
-            CloseOpeningWriter();
-        }
+            catch (Exception e)
+            {
+                CloseOpeningWriter();
+            }
+}
 
         // writeline severe + time + str
         public void StampLine(uint severity, string str)
         {
+
             if (_level < severity)
                 return;
+            try { 
+                OpenFile();
+                _writer.Write(GetSeverityString(severity) + " " + DateTime.Now + ": ");
+                _writer.WriteLine(str);
+                _writer.Flush();
 
-            OpenFile();
-            _writer.Write(GetSeverityString(severity) + " " + DateTime.Now + ": ");
-            _writer.WriteLine(str);
-            _writer.Flush();
-
-            if ((severity == Logger.ERROR) && (_separateError))
-            {
-                _writer_err.Write(GetSeverityString(severity) + " " + DateTime.Now + ": ");
-                _writer_err.WriteLine(str);
-                _writer_err.Flush();
+                if ((severity == Logger.ERROR) && (_separateError))
+                {
+                    _writer_err.Write(GetSeverityString(severity) + " " + DateTime.Now + ": ");
+                    _writer_err.WriteLine(str);
+                    _writer_err.Flush();
+                }
             }
-            CloseOpeningWriter();
+            catch (Exception e)
+            {
+                 CloseOpeningWriter();
+            }
         }
 
         // write severe + time + str
@@ -136,17 +155,21 @@ namespace BTS.Util
         {
             if (_level < severity)
                 return;
+            try { 
+                OpenFile();
+                _writer.Write(GetSeverityString(severity) + " " + DateTime.Now + ": " + str);
+                _writer.Flush();
 
-            OpenFile();
-            _writer.Write(GetSeverityString(severity) + " " + DateTime.Now + ": " + str);
-            _writer.Flush();
-
-            if ((severity == Logger.ERROR) && (_separateError))
-            {
-                _writer_err.Write(GetSeverityString(severity) + " " + DateTime.Now + ": " + str);
-                _writer_err.Flush();
+                if ((severity == Logger.ERROR) && (_separateError))
+                {
+                    _writer_err.Write(GetSeverityString(severity) + " " + DateTime.Now + ": " + str);
+                    _writer_err.Flush();
+                }
             }
-            CloseOpeningWriter();
+            catch (Exception e)
+            {
+                CloseOpeningWriter();
+            }
         }
 
         // writeline pure str
@@ -154,17 +177,21 @@ namespace BTS.Util
         {
             if (_level < severity)
                 return;
+            try { 
+                OpenFile();
+                _writer.WriteLine(str);
+                _writer.Flush();
 
-            OpenFile();
-            _writer.WriteLine(str);
-            _writer.Flush();
-
-            if ((severity == Logger.ERROR) && (_separateError))
-            {
-                _writer_err.WriteLine(str);
-                _writer_err.Flush();
+                if ((severity == Logger.ERROR) && (_separateError))
+                {
+                    _writer_err.WriteLine(str);
+                    _writer_err.Flush();
+                }
             }
-            CloseOpeningWriter();
+            catch (Exception e)
+            {
+                CloseOpeningWriter();
+            }
         }
 
 
