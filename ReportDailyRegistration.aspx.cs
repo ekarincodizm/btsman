@@ -291,33 +291,28 @@ namespace BTS.Page
 
                         int[] _numByPaidMethod = (int[])map["numByPaidMethod"];
                         int[] _sumCostByPaidMethod = (int[])map["sumCostByPaidMethod"];
-                        int _numAll = (int)map["numAll"];
-                        int _sumCostAll = (int)map["sumCostAll"];
 
                         int[] _numByPaidMethodCancel = (int[])map["numByPaidMethodCancel"];
                         int[] _sumCostByPaidMethodCancel = (int[])map["sumCostByPaidMethodCancel"];
-                        int _numAllCancel = (int)map["numAllCancel"];
-                        int _sumCostAllCancel = (int)map["sumCostAllCancel"];
-
 
                         if (reg[i]._status == 0) // normal 
                         {
                             _numByPaidMethod[reg[i]._paidMethod]++;
                             _sumCostByPaidMethod[reg[i]._paidMethod] += reg[i]._discountedCost;
-                            _numAll++;
-                            _sumCostAll += reg[i]._discountedCost;
+                            map["numAll"] = (int)map["numAll"] + 1;
+                            map["sumCostAll"] = (int)map["sumCostAll"] + reg[i]._discountedCost;
                         }
                         else if (reg[i]._status == 1) // cancel
                         {
                             _sumCostByPaidMethod[reg[i]._paidMethod]++;
                             _sumCostByPaidMethodCancel[reg[i]._paidMethod] += reg[i]._discountedCost;
-                            _numAllCancel++;
-                            _sumCostAllCancel += reg[i]._discountedCost;
-                        }           
+                            map["numAllCancel"] = (int)map["numAllCancel"] + 1;
+                            map["sumCostAllCancel"] = (int)map["sumCostAllCancel"] + reg[i]._discountedCost;
+                        } 
+                                  
 
                     }
                 }
-                Console.WriteLine("xx");
             }
         }
 
