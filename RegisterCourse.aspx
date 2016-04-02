@@ -668,7 +668,7 @@
                         </td>
                       <td>วันที่รับชำระเงิน</td>
                       <td>
-                            <input id="paid_date" name="paid_date" type="text" class="txtbox1" width="150px" readonly value="<%=DateTime.Today.ToString("dd/MM/yyyy", new CultureInfo("en-GB"))%>"/>                           
+                            <input id="paid_date" name="paid_date" type="text" class="txtbox1" width="150px" readonly value="<%=DateTime.Today.ToString("dd/MM/yyyy", new CultureInfo("en-US"))%>"/>                           
                       </td>
                     </tr>  
                     <tr>
