@@ -95,6 +95,9 @@ namespace BTS.Util
             }
             catch (Exception e)
             {
+
+            } finally
+            {
                 CloseOpeningWriter();
             }
         }
@@ -121,9 +124,13 @@ namespace BTS.Util
             }
             catch (Exception e)
             {
+
+            }
+            finally
+            {
                 CloseOpeningWriter();
             }
-}
+        }
 
         // writeline severe + time + str
         public void StampLine(uint severity, string str)
@@ -146,7 +153,11 @@ namespace BTS.Util
             }
             catch (Exception e)
             {
-                 CloseOpeningWriter();
+
+            }
+            finally
+            {
+                CloseOpeningWriter();
             }
         }
 
@@ -167,6 +178,10 @@ namespace BTS.Util
                 }
             }
             catch (Exception e)
+            {
+
+            }
+            finally
             {
                 CloseOpeningWriter();
             }
@@ -189,6 +204,10 @@ namespace BTS.Util
                 }
             }
             catch (Exception e)
+            {
+
+            }
+            finally
             {
                 CloseOpeningWriter();
             }
@@ -227,40 +246,44 @@ namespace BTS.Util
 
         private Logger(uint number,string basepath, string filename, uint level, bool separateError)
         {
-            Logger logger = GetLogger(number);
-            if (logger != null) logger.CloseOpeningWriter();
+            try {
+                Logger logger = GetLogger(number);
+                if (logger != null) logger.CloseOpeningWriter();
 
-            _filename = filename;
-            _basepath = basepath;
-            string[] fname = filename.Split('.');
-            _currFile = fname[0] + "_" + StringUtil.Date2Filename(DateTime.Today) + "." + (fname.Length > 1 ? fname[1] : "");
-            _currFile_err = _currFile + ".ERROR";
+                _filename = filename;
+                _basepath = basepath;
+                string[] fname = filename.Split('.');
+                _currFile = fname[0] + "_" + StringUtil.Date2Filename(DateTime.Today) + "." + (fname.Length > 1 ? fname[1] : "");
+                _currFile_err = _currFile + ".ERROR";
 
-            _separateError = separateError;
+                _separateError = separateError;
 
-            CloseOpeningWriter();
-            if (Config.APPEND_LOG)
-            {                
-                _writer = File.AppendText(_basepath + "\\" + _currFile);
-                if (_separateError)
-                    _writer_err = File.AppendText(_basepath + "\\" + _currFile_err);
+                CloseOpeningWriter();
+                if (Config.APPEND_LOG)
+                {
+                    _writer = File.AppendText(_basepath + "\\" + _currFile);
+                    if (_separateError)
+                        _writer_err = File.AppendText(_basepath + "\\" + _currFile_err);
+                }
+                else
+                {
+                    _writer = File.CreateText(_basepath + "\\" + _currFile);
+                    if (_separateError)
+                        _writer_err = File.CreateText(_basepath + "\\" + _currFile_err);
+                }
+
+                _level = level;
+
+                if (_table == null)
+                    _table = new Hashtable();
+
+                if (_table.ContainsKey(number)) _table.Remove(number);
+                _table.Add(number, this);
+
+                PrintHeader();
+            } catch (Exception e) {
+                Console.WriteLine(e.StackTrace);
             }
-            else
-            {
-                _writer = File.CreateText(_basepath + "\\" + _currFile);
-                if (_separateError)
-                    _writer_err = File.CreateText(_basepath + "\\" + _currFile_err);
-            }
-
-            _level = level;
-
-            if (_table == null)
-                _table = new Hashtable();
-
-            if (_table.ContainsKey(number)) _table.Remove(number);
-            _table.Add(number, this);
-
-            PrintHeader();
         }
         ~Logger()
         {
@@ -269,8 +292,14 @@ namespace BTS.Util
 
         protected void CloseOpeningWriter()
         {
-            if (_writer != null) _writer.Close();
-            if (_writer_err != null) _writer_err.Close();
+            try {
+
+                if (_writer != null) _writer.Close();
+                if (_writer_err != null) _writer_err.Close();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
 
         private void PrintHeader()
