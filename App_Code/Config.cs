@@ -44,14 +44,15 @@ namespace BTS
         public static string DB_NAME = "bts";
         public static string DB_USER = "root";
         public static string DB_PASSWORD = "btsman";
+        public static string DB_CHAR_ENC = "tis620";
 
         // Capacity
         public static int DOWNLOADED_FILES_KEEP = 3;
 
         // Path
-        public static string PATH_APP_ROOT = "E:\\Work\\BTS\\BTSMan";
-        public static string PATH_LOG = "E:\\Work\\BTS\\BTSMan\\log\\main";
-        public static string PATH_SQLLOG = "E:\\Work\\BTS\\BTSMan\\log\\db";
+        public static string PATH_APP_ROOT = ".";
+        public static string PATH_LOG = ".\\main";
+        public static string PATH_SQLLOG = ".\\log\\db";
         // should not be changed
         public static string URL_PIC_COURSE = "img/course";
         public static string URL_PIC_TEACHER = "img/teacher";
@@ -71,7 +72,7 @@ namespace BTS
         public static string LOG_LEVEL = "INFO";
         // SQLLOG_LEVEL = ONLY_UPDATE,ALL
         public static string SQLLOG_LEVEL = "ONLY_UPDATE";
-        public static string LOG_NAME = "main.log"; 
+        public static string LOG_NAME = "main.log";
         public static string SQLLOG_NAME = "sql.log";
 
         // Printing
@@ -119,21 +120,23 @@ namespace BTS
 
 
 
-        static Config() {
+        static Config()
+        {
             Reload();
             Reconfig();
         }
 
         public static void Reload()
         {
-            string configFile = System.Configuration.ConfigurationSettings.AppSettings["BTSConfig"];
+            string configFile = System.Configuration.ConfigurationManager.AppSettings["BTSConfig"];
             INIFileParser parser = new INIFileParser(configFile);
-            
+
             // Database
-            DB_SERVER = parser.GetSetting("Database","DB_SERVER");
+            DB_SERVER = parser.GetSetting("Database", "DB_SERVER");
             DB_NAME = parser.GetSetting("Database", "DB_NAME");
             DB_USER = parser.GetSetting("Database", "DB_USER");
             DB_PASSWORD = parser.GetSetting("Database", "DB_PASSWORD");
+            DB_CHAR_ENC = parser.GetSetting("Database", "DB_CHAR_ENC");
 
             // Capacity
             DOWNLOADED_FILES_KEEP = Int32.Parse(parser.GetSetting("Capacity", "DOWNLOADED_FILES_KEEP"));
@@ -175,7 +178,7 @@ namespace BTS
 
             // Debug
             AUTO_LOGIN = Boolean.Parse(parser.GetSetting("Debug", "AUTO_LOGIN"));
-            
+
 
         }
 
@@ -185,41 +188,41 @@ namespace BTS
             Logger mainlog = Logger.CreateLogger(MAINLOG, PATH_LOG, LOG_NAME, Logger.GetSeverityByString(LOG_LEVEL));
             Logger sqllog = SQLLogger.CreateLogger(SQLLOG, PATH_SQLLOG, SQLLOG_NAME, SQLLogger.GetSeverityByString(SQLLOG_LEVEL));
         }
-/*
-        public static void InitConfig(string ConfigFilePath)
-        {
-
-            if ((ConfigFilePath == null) || (!File.Exists(ConfigFilePath))) return;
-
-            Console.WriteLine("Reading config -> " + ConfigFilePath);
-            StreamReader sr = new StreamReader(ConfigFilePath);
-            String line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                try
+        /*
+                public static void InitConfig(string ConfigFilePath)
                 {
-                    if ((line.Length <= 0) || (line.StartsWith("#"))) continue;
 
-                    string[] config = line.Split('=');
-                    if (config.Length != 2) continue;
+                    if ((ConfigFilePath == null) || (!File.Exists(ConfigFilePath))) return;
 
-                    config[0] = config[0].Trim();
-                    config[1] = config[1].Trim();
+                    Console.WriteLine("Reading config -> " + ConfigFilePath);
+                    StreamReader sr = new StreamReader(ConfigFilePath);
+                    String line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        try
+                        {
+                            if ((line.Length <= 0) || (line.StartsWith("#"))) continue;
 
-                    SetConfig(config[0], config[1]);
+                            string[] config = line.Split('=');
+                            if (config.Length != 2) continue;
+
+                            config[0] = config[0].Trim();
+                            config[1] = config[1].Trim();
+
+                            SetConfig(config[0], config[1]);
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Error: Reading config -> " + line + " trace -> " + e.StackTrace);
+                        }
+
+                    }
+                    sr.Close();
+
 
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error: Reading config -> " + line + " trace -> " + e.StackTrace);
-                }
-
-            }
-            sr.Close();
-
-
-        }
-*/
+        */
 
         public static bool ParseBoolean(string val)
         {

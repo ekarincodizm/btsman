@@ -112,7 +112,7 @@ namespace BTS.Page
         {
             outBuf = new StringBuilder();
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             theTeacher = new Teacher();
             theTeacher.LoadFromDB(db, " teacher_id=" + teacherID);
             PaidGroup[] memberInGroup = theTeacher.LoadAssosicatedPaidGroup(db);
@@ -239,7 +239,7 @@ namespace BTS.Page
             string[,] bgclass = new string[,] { { "class=\"spec\"", "class=\"td1\"" }, { "class=\"specalt\"", "class=\"alt\"" } };
 
             listTeacher = new List<Teacher>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             string qSearchSQL = Teacher.GetQSearchSQL(searchStr);
             if (qSearchSQL.Trim().Length > 0)
             {
@@ -313,7 +313,7 @@ namespace BTS.Page
 
         public void DoAddTeacher()
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             groupList = PaidGroup.LoadListFromDB(db, "");
             db.Close();
         }
@@ -369,7 +369,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.AddToDB(db);
             db.Close();
@@ -377,7 +377,7 @@ namespace BTS.Page
 
         public void DoEditTeacher(string teacherID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
 
             //Load GroupList
             groupList = PaidGroup.LoadListFromDB(db, "");
@@ -462,7 +462,7 @@ namespace BTS.Page
             }
 
             // Save to DB
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             t.UpdateToDB(db);
             db.Close();
@@ -473,7 +473,7 @@ namespace BTS.Page
             Teacher t = new Teacher();
             t._teacherID = Int32.Parse(teacherID);
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             db.BeginTransaction(IsolationLevel.ReadCommitted);
             // delete paid_group_teacher_mapping first

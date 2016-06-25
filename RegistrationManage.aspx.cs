@@ -133,7 +133,7 @@ namespace BTS.Page
             string paidMethod = Request.Form.Get("paid_method");
             string note = Request.Form.Get("note");
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             db.BeginTransaction(IsolationLevel.ReadCommitted);
 
@@ -159,7 +159,7 @@ namespace BTS.Page
             string note = Request.Form.Get("note");
 
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             db.BeginTransaction(IsolationLevel.ReadCommitted);
 
@@ -196,7 +196,7 @@ namespace BTS.Page
 
         protected void DoEditRegistration(string regisID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             theReg = new Registration();
@@ -239,7 +239,7 @@ namespace BTS.Page
 
         protected StringBuilder DoInitPrinRegistrationCard(string regisID)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             StringBuilder tmpBuf = Registration.PrintCard(db, Int32.Parse(regisID));
             db.Close();
@@ -248,7 +248,7 @@ namespace BTS.Page
 
         protected StringBuilder DoInitPrinRegistrationReceipt(string regisID, string title)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
             StringBuilder tmpBuf = Registration.PrintReceipt(db, Int32.Parse(regisID), title); 
             db.Close();
@@ -265,7 +265,7 @@ namespace BTS.Page
             string grey = "class=\"thspec_grey\"";
 
             listRegistration = new List<Registration>();
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             string qSearchSQL = Registration.GetQSearchSQL(searchStr);

@@ -48,7 +48,7 @@ namespace BTS.Page
 
         protected void AddMockStudent(int num)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             Random rand = new Random((int)DateTime.Now.Ticks);
@@ -74,7 +74,7 @@ namespace BTS.Page
 
         protected void AddMockTeacher(int num)
         {
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             db.Connect();
 
             Random rand = new Random((int)DateTime.Now.Ticks);

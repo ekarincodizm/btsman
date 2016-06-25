@@ -36,7 +36,7 @@ namespace BTS.Util
         {
             _authDB.Clear();
 
-            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD);
+            DBManager db = new MySQLDBManager(Config.DB_SERVER, Config.DB_NAME, Config.DB_USER, Config.DB_PASSWORD, Config.DB_CHAR_ENC);
             OdbcDataReader reader = db.Query("SELECT r.role_id,r.name,rightname,action FROM authorization a, role r WHERE a.role_id = r.role_id");
             while (reader.Read())
             {
