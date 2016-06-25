@@ -100,9 +100,8 @@
     <table id="Table2" cellspacing="0" summary="..." style="width:800px" border=0>  
       <tr>
         <th scope="col" align=center width="100px" NOWRAP>รหัส</th>
-	    <th scope="col" align=center width="70px">วันที่สมัคร</th>
-	    <th scope="col" align=center width="70px">วันที่รับชำระเงิน</th>
-	    <th scope="col" align=center width="210px">คอร์ส</th>
+	    <th scope="col" align=center width="100px">วัน-เวลา</th>
+	    <th scope="col" align=center width="200px">คอร์ส</th>
 	    <th scope="col" align=center width="200px">นักเรียน</th>
         <th scope="col" align=center width="90px">ค่าเรียน(จ่ายจริง)</th>
         <th scope="col" align=center width="50px">สถานะ</th>        

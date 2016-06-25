@@ -26,7 +26,6 @@ namespace BTS.Entity
 
     public class RegisTransaction : CommonEntity
     {
-        static readonly object _lock = new object();
 
         public int _transactionID;
         public string _transactionCode;
@@ -35,11 +34,10 @@ namespace BTS.Entity
         public int _status;
         public int _paidMethod;
         public int _paidRound;
-        public DateTime _paiddate;
         public bool _isPaid;
 
 
-        public static string[] PAID_METHOD_TRANCODE = { "C", "K", "D", "T", "S", "V" };
+        public static string[] PAID_METHOD_TRANCODE = { "C", "K", "D", "T", "S" };
         public static string[] USER_TRANCODE = { "A", "M", "F" };
 
         // raw course list
@@ -76,51 +74,8 @@ namespace BTS.Entity
             _courses.AddLast(course);
         }
 
-        protected int GetTransationCountThisMonth(DBManager db, AppUser user, int paidMethod)
-        {
-            String thisMonth = DateTime.Today.ToString("yyyy-MM", new System.Globalization.CultureInfo("en-US")) + "-01";
-
-            String sql = "select count(*) as cnt from ( SELECT distinct transaction_id FROM registration WHERE branch_id='" + user._branchID + "' and paid_method="+ paidMethod +"  and regis_date >= '" + thisMonth + "') as t1";
-            OdbcDataReader reader = db.Query(sql);
-            if (reader.Read())
-            {
-                return reader.GetInt32(0);
-            }
-            return 0;
-        }
 
         public void CreateTransactionCode(DBManager db, DateTime regisdate)
-        {
-            // format
-            // 1. branch code - 2 digits
-            // 2. paid method C/K/D/T/V
-            // 3. yyMM 1302
-            // 5. number of transaction this month XXX
-
-            AppUser regisUser = new AppUser();
-            regisUser.LoadFromDB(db, " username='" + _username + "'");
-
-            Branch branch = new Branch();
-            branch.LoadFromDB(db, "branch_id=" + regisUser._branchID);
-
-            // find the number of transaction for the user on this month
-            int numRegisted = GetTransationCountThisMonth(db, regisUser, _paidMethod);
-
-
-
-            StringBuilder buf = new StringBuilder(40);
-            buf.Append(branch._branchCode);
-            buf.Append(PAID_METHOD_TRANCODE[_paidMethod]);
-            buf.Append(regisdate.Year.ToString().Substring(2)).Append(StringUtil.FillString(regisdate.Month.ToString(), "0", 2, true));
-            buf.Append(StringUtil.FillString((numRegisted + 1).ToString(), "0", 3, true));
-            // set
-            this._transactionCode = buf.ToString();
-
-            //
-
-        }
-
-        public void CreateTransactionCode_OLD(DBManager db, DateTime regisdate)
         {
             // format
             // 1. paid method C/K/D/T
@@ -202,8 +157,7 @@ namespace BTS.Entity
                         reg._username = this._username;
                         reg._status = 0;
                         reg._paidMethod = this._paidMethod;
-                        reg._paidRound = 0;
-                        reg._paiddate = this._paiddate;
+                        reg._paidRound = 0;                        
                         reg._isPaid = false;
 
                         regList.AddLast(reg);
@@ -231,7 +185,6 @@ namespace BTS.Entity
                         reg._status = 0;
                         reg._paidMethod = this._paidMethod;
                         reg._paidRound = 0;
-                        reg._paiddate = this._paiddate;
                         reg._isPaid = false;
 
                         regList.AddLast(reg);
@@ -239,34 +192,27 @@ namespace BTS.Entity
             }
 
             db.BeginTransaction(IsolationLevel.ReadCommitted);
-
-            SynchronizedAddToDB(db, this, regList);
+            
+            // get new transaction_id
+            if (this._transactionID == 0)
+            {
+                int maxID = RegisTransaction.GetMaxTransRegisID(db, _branchID) + 1;
+                this._transactionID = maxID;
+            }
+            foreach (Registration reg in regList)
+            {
+                // Add new registration
+                reg._transactionID = this._transactionID;
+                reg._transactionCode = this._transactionCode;
+                reg.AddToDB(db);
+                // Update Payment
+                Payment.UpdatePaymentByCourse(db, reg._courseID);
+            }
+            this._regList = regList;
 
             db.Commit();
 
             return true;
-        }
-
-        public static void SynchronizedAddToDB(DBManager db, RegisTransaction regt, LinkedList<Registration> regList)
-        {
-            lock (_lock) {
-                // get new transaction_id
-                if (regt._transactionID == 0)
-                {
-                    int maxID = RegisTransaction.GetMaxTransRegisID(db, regt._branchID) + 1;
-                    regt._transactionID = maxID;
-                }
-                foreach (Registration reg in regList)
-                {
-                    // Add new registration
-                    reg._transactionID = regt._transactionID;
-                    reg._transactionCode = regt._transactionCode;
-                    reg.AddToDB(db);
-                    // Update Payment
-                    Payment.UpdatePaymentByCourse(db, reg._courseID);
-                }
-                regt._regList = regList;
-            }
         }
 
         public override bool UpdateToDB(DBManager db)

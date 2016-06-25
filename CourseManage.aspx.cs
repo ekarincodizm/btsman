@@ -178,19 +178,14 @@ namespace BTS.Page
                 stdTxt.Append("</tr>");
             }
 
-            String courseScheduleDetail = "-";
-            if (theCourse._courseType == "คอร์สสด") {
-                courseScheduleDetail =  theCourse._startdate.ToString("dd/MM/yyyy", ci) + " - " + theCourse._enddate.ToString("dd/MM/yyyy", ci) + "<br>" + theCourse._dayOfWeek + " " + theCourse._opentime;
-            }
-
             String htmlContent =
                 String.Format(templateContent
                     , Config.URL_PIC_COURSE + "/" + theCourse._img                    
                     , theCourse._btsCourseID + " " + theCourse._courseName
                     , theCourse._shortName
-                    , theCourse._courseType
                     , theCourse._category
-                    , courseScheduleDetail
+                    , theCourse._startdate.ToString("dd/MM/yyyy", ci) + " - " + theCourse._enddate.ToString("dd/MM/yyyy", ci) + "<br>"
+                      + theCourse._dayOfWeek + " " + theCourse._opentime
                     , theCourse._teacher._firstname + " " + theCourse._teacher._surname
                     , PaidGroup.GetPaidGroupID(theCourse._paidGroupID)+ " " + theCourse._paidGroup._name
                     , StringUtil.Int2StrComma(theCourse._cost)
@@ -546,7 +541,6 @@ namespace BTS.Page
             c._btsCourseID = Request["bts_course_id"];
             c._courseName = Request["course_name"];
             c._shortName = Request["short_name"];
-            c._courseType = Request["course_type"];
             c._courseDesc = Request["course_desc"];
             c._roomID = Int32.Parse(Request["room_id"]);
             c._teacherID = Int32.Parse(Request["teacher_id"]);
@@ -640,7 +634,6 @@ namespace BTS.Page
             c._btsCourseID = Request["bts_course_id"];
             c._courseName = Request["course_name"];
             c._shortName = Request["short_name"];
-            c._courseType = Request["course_type"];
             c._courseDesc = Request["course_desc"];
             c._roomID = Int32.Parse(Request["room_id"]);
             c._teacherID = Int32.Parse(Request["teacher_id"]);

@@ -116,10 +116,10 @@ namespace BTS.Page
                     pb.Print(outBuf, tmpBuf, Config.PAGE_BREAK_CARD);
                     outBuf.AppendLine("<br>");
                     
-                    tmpBuf = DoInitPrinRegistrationReceipt(targetID, "ต้นฉบับ");
+                    tmpBuf = DoInitPrinRegistrationReceipt(targetID, "สำหรับนักเรียน");
                     pb.Print(outBuf, tmpBuf, Config.PAGE_BREAK_RECEIPT);
                     outBuf.AppendLine("<br>");
-                    tmpBuf = DoInitPrinRegistrationReceipt(targetID, "สำเนา");
+                    tmpBuf = DoInitPrinRegistrationReceipt(targetID, "สำหรับโรงเรียน");
                     pb.Print(outBuf, tmpBuf, Config.PAGE_BREAK_RECEIPT);
 
                     Session[SessionVar.PRINT_INFO] = new StringBuilder(outBuf.ToString());
@@ -223,7 +223,6 @@ namespace BTS.Page
                     , promotionTxt
                     , "<a href=\"StudentManage.aspx?actPage=view&targetID=" + theReg._studentID + "\" >" + Student.GetStudentID(theReg._student._studentID) + " " + theReg._student._firstname + " " + theReg._student._surname + "</a>"
                     , StringUtil.ConvertYearToEng(theReg._regisdate, "yyyy/MM/dd HH:mm:ss")
-                    , StringUtil.ConvertYearToEng(theReg._paiddate, "yyyy/MM/dd")
                     , theReg._branch._branchName
                     , StringUtil.Int2StrComma(theReg._fullCost)
                     , StringUtil.Int2StrComma(theReg._discountedCost)
@@ -298,7 +297,7 @@ namespace BTS.Page
 
                     reg.LoadBranch(db);
                     outBuf.Append("<tr>");
-                    outBuf.Append("<th colspan=9 scope=\"row\" abbr=\"Model\" " + bgclass[j % 2, 0] + "><b>" + reg.GetRegisTransactionID() + "</b></th>");
+                    outBuf.Append("<th colspan=8 scope=\"row\" abbr=\"Model\" " + bgclass[j % 2, 0] + "><b>" + reg.GetRegisTransactionID() + "</b></th>");
                     outBuf.Append("</tr>\n");
                     
                 }
@@ -315,7 +314,6 @@ namespace BTS.Page
                 outBuf.Append("<tr>");
                 outBuf.Append("<th scope=\"row\" abbr=\"Model\" " + bgclass[j % 2, 0] + ">" +  Registration.GetRegistrationID(reg._regisID) + "</th>");
                 outBuf.Append("<td " + bgclass[j % 2, 1] + "  align=center>" + reg._regisdate.ToString("dd/MM/yyyy HH:mm", ci) + "&nbsp</td>");
-                outBuf.Append("<td " + bgclass[j % 2, 1] + "  align=center>" + reg._paiddate.ToString("dd/MM/yyyy", ci) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[j % 2, 1] + "  align=left>" + courseInfo + "</td>");                
                 outBuf.Append("<td " + bgclass[j % 2, 1] + "  align=left>" + studentInfo + "</td>");
                 outBuf.Append("<td " + bgclass[j % 2, 1] + "  align=right>" + costInfo + "&nbsp</td>");

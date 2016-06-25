@@ -7,10 +7,6 @@
 <%@ Import Namespace="BTS" %>
 <%@ Import Namespace="BTS.Entity" %>
 <%@ Import Namespace="BTS.Util" %>
-<%@ Import Namespace="System.Collections" %>
-<%@ Import Namespace="System.Collections.Generic" %>
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -195,21 +191,17 @@
     <td>
     <table id="Table2" cellspacing="0" summary="..." style="width:900px" border=0>  
       <tr>
-        <th scope="col" align=center width="20px" NOWRAP>ลำดับ</th>
-        <th scope="col" align=center width="80px">วันที่รับชำระเงิน</th>
-        <th scope="col" align=center width="80px">วันที่สมัคร</th>
+        <th scope="col" align=center width="30px" NOWRAP>ลำดับ</th>
+        <th scope="col" align=center width="80px">วัน-เวลา</th>
         <th scope="col" align=center width="100px">รหัสใบเสร็จ</th>
 	    <th scope="col" align=center width="150px">นักเรียน</th>
 	    <th scope="col" align=center width="100px">โรงเรียน</th>	    
 	    <th scope="col" align=center width="100px">ระดับชั้น</th>	    
 	    <th scope="col" align=center width="200px">คอร์ส</th>
-	    <th scope="col" align=center width="80px">วันที่เริ่ม</th>
-	    <th scope="col" align=center width="80px">วันที่สิ้นสุด</th>
 	    <th scope="col" align=center width="50px">ราคาจ่าย</th>
         <th scope="col" align=center width="70px">วิธีชำระเงิน</th>
         <th scope="col" align=center width="70px">สถานะ</th>
         <th scope="col" align=center width="150px">ผู้รับสมัคร</th>
-        <th scope="col" align=center width="100px">ประเภท</th>
       </tr>
 <%
    Response.Write(this.outBuf.ToString());
@@ -219,134 +211,56 @@
   </tr>
   <tr>
     <td>
-        <table border=0>
-            <tr>
-    
-                        <td>
-                           <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
-                           <tr bgcolor="#CAE8EA">
-                                <td colspan=3 align=center><b>สรุปยอดรับสมัคร</b></td>
-                           </tr>
-                           <tr bgcolor="#CAE8EA">
-                                <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
-                                <td width="100px" align=center><b>รายการ</b></td>
-                                <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
-                           </tr>
-                    <% for (int i=0;i<numPaidMethod.Length;i++) { %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
-                                <td align=center><%= numPaidMethod[i] %></td>
-                                <td align=right><%= StringUtil.Int2StrComma(sumCostByPaidMethod[i]) %>&nbsp&nbsp</td>
-                           </tr>
-                    <% } %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><b>รวมทั้งสิ้น</b></td>
-                                <td align=center><b><%= numSuccess %></b></td>
-                                <td align=right><b><%= StringUtil.Int2StrComma(sumAllCost) %></b>&nbsp&nbsp</td>
-                           </tr>
-                           </table>    
-                        </td>
+       <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
+       <tr bgcolor="#CAE8EA">
+            <td colspan=3 align=center><b>สรุปยอดรับสมัคร</b></td>
+       </tr>
+       <tr bgcolor="#CAE8EA">
+            <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
+            <td width="100px" align=center><b>รายการ</b></td>
+            <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
+       </tr>
+<% for (int i=0;i<numPaidMethod.Length;i++) { %>       
+       <tr bgcolor="#FFFFFF">
+            <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
+            <td align=center><%= numPaidMethod[i] %></td>
+            <td align=right><%= StringUtil.Int2StrComma(sumCostByPaidMethod[i]) %>&nbsp&nbsp</td>
+       </tr>
+<% } %>       
+       <tr bgcolor="#FFFFFF">
+            <td align=center><b>รวมทั้งสิ้น</b></td>
+            <td align=center><b><%= numSuccess %></b></td>
+            <td align=right><b><%= StringUtil.Int2StrComma(sumAllCost) %></b>&nbsp&nbsp</td>
+       </tr>
+       </table>    
+    </td>
+   </tr>
 
-                        <td>
-                           <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
-                           <tr bgcolor="#CAE8EA">
-                                <td colspan=3 align=center><b>สรุปยอดยกเลิก</b></td>
-                           </tr>
-                           <tr bgcolor="#CAE8EA">
-                                <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
-                                <td width="100px" align=center><b>รายการ</b></td>
-                                <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
-                           </tr>
-                    <% for (int i=0;i<numPaidMethodCancel.Length;i++) { %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
-                                <td align=center><%= numPaidMethodCancel[i] %></td>
-                                <td align=right><%= StringUtil.Int2StrComma(sumCostByPaidMethodCancel[i]) %>&nbsp&nbsp</td>
-                           </tr>
-                    <% } %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><b>รวมทั้งสิ้น</b></td>
-                                <td align=center><b><%= numCancel %></b></td>
-                                <td align=right><b><%= StringUtil.Int2StrComma(sumCancelCost) %></b>&nbsp&nbsp</td>
-                           </tr>
-                           </table>    
-                        </td>
-            </tr>
-<!-- Sum by course category -->
-<%  for (int j = 0; j < Config.COURSE_CATE.Length; j++) {
-
-        String cate = Config.COURSE_CATE[j];
-        Dictionary<string, Object> map = (Dictionary<string, object>)sumByCourseCate[cate];
-        
-        int[] _numByPaidMethod = (int[])map["numByPaidMethod"];
-        int[] _sumCostByPaidMethod = (int[])map["sumCostByPaidMethod"];
-        int _numAll = (int)map["numAll"];
-        int _sumCostAll = (int)map["sumCostAll"];
-
-        int[] _numByPaidMethodCancel = (int[])map["numByPaidMethodCancel"];
-        int[] _sumCostByPaidMethodCancel = (int[])map["sumCostByPaidMethodCancel"];
-        int _numAllCancel = (int)map["numAllCancel"];
-        int _sumCostAllCancel = (int)map["sumCostAllCancel"]; 
-%>
-
-            <tr>    
-                        <td>
-                           <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
-                           <tr bgcolor="#CAE8EA">
-                                <td colspan=3 align=center><b>สรุปยอดรับสมัคร <font color="#c75f3e"><%= cate %></font></b></td>
-                           </tr>
-                           <tr bgcolor="#CAE8EA">
-                                <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
-                                <td width="100px" align=center><b>รายการ</b></td>
-                                <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
-                           </tr>
-                    <% for (int i = 0; i < _numByPaidMethod.Length; i++)
-                       { %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
-                                <td align=center><%= _numByPaidMethod[i]%></td>
-                                <td align=right><%= StringUtil.Int2StrComma(_sumCostByPaidMethod[i])%>&nbsp&nbsp</td>
-                           </tr>
-                    <% } %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><b>รวมทั้งสิ้น</b></td>
-                                <td align=center><b><%= _numAll%></b></td>
-                                <td align=right><b><%= StringUtil.Int2StrComma(_sumCostAll)%></b>&nbsp&nbsp</td>
-                           </tr>
-                           </table>    
-                        </td>
-
-                        <td>
-                           <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
-                           <tr bgcolor="#CAE8EA">
-                                <td colspan=3 align=center><b>สรุปยอดยกเลิก <font color="#c75f3e"><%= cate %></font></b></td>
-                           </tr>
-                           <tr bgcolor="#CAE8EA">
-                                <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
-                                <td width="100px" align=center><b>รายการ</b></td>
-                                <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
-                           </tr>
-                    <% for (int i = 0; i < _numByPaidMethodCancel.Length; i++)
-                       { %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
-                                <td align=center><%= _numByPaidMethodCancel[i]%></td>
-                                <td align=right><%= StringUtil.Int2StrComma(_sumCostByPaidMethodCancel[i])%>&nbsp&nbsp</td>
-                           </tr>
-                    <% } %>       
-                           <tr bgcolor="#FFFFFF">
-                                <td align=center><b>รวมทั้งสิ้น</b></td>
-                                <td align=center><b><%= _numAllCancel%></b></td>
-                                <td align=right><b><%= StringUtil.Int2StrComma(_sumCostAllCancel)%></b>&nbsp&nbsp</td>
-                           </tr>
-                           </table>    
-                        </td>
-            </tr>
-
-<%  }  %>
-<!-- End Sum by course category -->
-        </table>
-      </td>
+  <tr>
+    <td>
+       <table width="300px" align=right border=1 cellpadding=0 cellspacing=0 bordercolor="#C1DAD7" bgcolor="#FFFFFF">
+       <tr bgcolor="#CAE8EA">
+            <td colspan=3 align=center><b>สรุปยอดยกเลิก</b></td>
+       </tr>
+       <tr bgcolor="#CAE8EA">
+            <td width="100px" align=center><b>วิธีชำระเงิน</b></td>
+            <td width="100px" align=center><b>รายการ</b></td>
+            <td width="100px" align=center><b>ยอดรวม(บาท)</b></td>
+       </tr>
+<% for (int i=0;i<numPaidMethodCancel.Length;i++) { %>       
+       <tr bgcolor="#FFFFFF">
+            <td align=center><%=Registration.GetPaidMethodText(i.ToString())%></td>
+            <td align=center><%= numPaidMethodCancel[i] %></td>
+            <td align=right><%= StringUtil.Int2StrComma(sumCostByPaidMethodCancel[i]) %>&nbsp&nbsp</td>
+       </tr>
+<% } %>       
+       <tr bgcolor="#FFFFFF">
+            <td align=center><b>รวมทั้งสิ้น</b></td>
+            <td align=center><b><%= numCancel %></b></td>
+            <td align=right><b><%= StringUtil.Int2StrComma(sumCancelCost) %></b>&nbsp&nbsp</td>
+       </tr>
+       </table>    
+    </td>
    </tr>
   <!-- Table Footer -->
   <tr >

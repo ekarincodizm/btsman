@@ -53,10 +53,6 @@ namespace BTS.Page
         public int numCancel = 0;
         public int sumCancelCost = 0;
 
-        // sum by course category
-        public Dictionary<String, Object> sumByCourseCate = new Dictionary<string, object>();
-
-
 
         public string errorText = "";
         public CultureInfo ci = new CultureInfo("en-US");
@@ -221,7 +217,7 @@ namespace BTS.Page
             }
 
 
-            string selectSQl = "SELECT rg.*, b.branch_code, s.firstname as student_firstname, s.surname as student_surname, s.school as student_school, s.level as student_level, c.bts_course_id as bts_course_id, c.course_name as course_name, c.course_type as course_type, c.category as course_category, c.start_date as start_date, c.end_date as end_date "
+            string selectSQl = "SELECT rg.*, b.branch_code, s.firstname as student_firstname, s.surname as student_surname, s.school as student_school, s.level as student_level, c.bts_course_id as bts_course_id, c.course_name as course_name "
                                + " FROM registration rg, student s, course c, branch b ";
             string whereSQL = " WHERE rg.student_id=s.student_id AND rg.course_id=c.course_id "
                                 + " AND rg.regis_date between '" + startDate.ToString("yyyy/MM/dd HH:mm:ss", ci) + "' and '" + endDate.ToString("yyyy/MM/dd HH:mm:ss", ci) + "' "
@@ -234,31 +230,6 @@ namespace BTS.Page
             reg = Registration.LoadListFromDBCustom(db, selectSQl + whereSQL);
             db.Close();
 
-/*
-    public int[] numPaidMethodCancel = new int[Registration.PAID_METHOD.Length];
-    public int[] sumCostByPaidMethodCancel = new int[Registration.PAID_METHOD.Length];
-    public int numCancel = 0;
-    public int sumCancelCost = 0;
- */
-            // prepare dict cate
-            for (int j = 0; j < Config.COURSE_CATE.Length; j++)
-            {
-                Dictionary<string, Object> map = new Dictionary<string,object>();
-                map["numByPaidMethod"] = new int[Registration.PAID_METHOD.Length];
-                map["sumCostByPaidMethod"] = new int[Registration.PAID_METHOD.Length];
-                map["numAll"] = 0;
-                map["sumCostAll"] = 0;
-
-                map["numByPaidMethodCancel"] = new int[Registration.PAID_METHOD.Length];
-
-                map["sumCostByPaidMethodCancel"] = new int[Registration.PAID_METHOD.Length];               
-                map["numAllCancel"] = 0;
-                map["sumCostAllCancel"] = 0;
-
-                
-                String cate = Config.COURSE_CATE[j];
-                sumByCourseCate.Add(cate, map);
-            }
 
             for (int i = 0; i < reg.Length; i++)
             {
@@ -276,44 +247,6 @@ namespace BTS.Page
                     numCancel++;
                     sumCancelCost += reg[i]._discountedCost;
                 }
-
-                for (int j = 0; j < Config.COURSE_CATE.Length; j++)
-                {
-                    
-                    String cate = Config.COURSE_CATE[j];
-                    Dictionary<string, Object> map = (Dictionary<string,object>)sumByCourseCate[cate];
-                    
-                    if (reg[i]._courseCategotry.Equals(cate)) {
-
-                        int[] _numByPaidMethod = (int[])map["numByPaidMethod"];
-                        int[] _sumCostByPaidMethod = (int[])map["sumCostByPaidMethod"];
-                        int _numAll = (int)map["numAll"];
-                        int _sumCostAll = (int)map["sumCostAll"];
-
-                        int[] _numByPaidMethodCancel = (int[])map["numByPaidMethodCancel"];
-                        int[] _sumCostByPaidMethodCancel = (int[])map["sumCostByPaidMethodCancel"];
-                        int _numAllCancel = (int)map["numAllCancel"];
-                        int _sumCostAllCancel = (int)map["sumCostAllCancel"];
-
-
-                        if (reg[i]._status == 0) // normal 
-                        {
-                            _numByPaidMethod[reg[i]._paidMethod]++;
-                            _sumCostByPaidMethod[reg[i]._paidMethod] += reg[i]._discountedCost;
-                            _numAll++;
-                            _sumCostAll += reg[i]._discountedCost;
-                        }
-                        else if (reg[i]._status == 1) // cancel
-                        {
-                            _sumCostByPaidMethod[reg[i]._paidMethod]++;
-                            _sumCostByPaidMethodCancel[reg[i]._paidMethod] += reg[i]._discountedCost;
-                            _numAllCancel++;
-                            _sumCostAllCancel += reg[i]._discountedCost;
-                        }           
-
-                    }
-                }
-                Console.WriteLine("xx");
             }
         }
 
@@ -368,7 +301,7 @@ namespace BTS.Page
             //stdTxt.Append(StringUtil.GetExcelEncodingPrefix());
              //ลำดับ วันที่ เลขที่ใบเสร็จ นักเรียน โรงเรียน ระดับชั้น รหัสคอร์ส ชื่อคอร์ส ราคา วิธีการชำระ สถานะ หมายเหตุ ชื่อผู้สมัคร
             stdTxt.Append("รายงานสรุปยอดการลงทะเบียนประจำวันของสาขา " + branchName + "ตั้งแต่วันที่ " + StringUtil.ConvertYearToEng(startDate, "dd/MM/yyyy") + " ถึง " + StringUtil.ConvertYearToEng(startDate, "dd/MM/yyyy") +"\n");
-            stdTxt.Append("ลำดับ, วันที่รับชำระเงิน, วันที่สมัคร, รหัสใบเสร็จ, รหัสนักเรียน, ชื่อ-นามสกุล, โรงเรียน, ระดับชั้น,รหัสคอร์ส, ชื่อคอร์ส,วันที่เริ่ม, วันที่สิ้นสุด, ราคาจ่าย, วิธีชำระเงิน, สถานะ, ผู้รับสมัคร, ประเภท  \n");
+            stdTxt.Append("ลำดับ, วัน-เวลา, รหัสใบเสร็จ, รหัสนักเรียน, ชื่อ-นามสกุล, โรงเรียน, ระดับชั้น,รหัสคอร์ส, ชื่อคอร์ส, ราคาจ่าย, วิธีชำระเงิน, สถานะ, ผู้รับสมัคร  \n");
 
             // content
             for (int i = 0; i < reg.Length; i++)
@@ -379,16 +312,7 @@ namespace BTS.Page
 
                 AppUser theUser = userAllMap[reg[i]._username];
 
-                String courseStart = "-";
-                String courseEnd = "-";
-                if (reg[i]._courseType == "คอร์สสด")
-                {
-                    courseStart = reg[i]._courseStart.ToString("dd/MM/yyyy", ci);
-                    courseEnd = reg[i]._courseEnd.ToString("dd/MM/yyyy", ci);
-                }
-
                 stdTxt.Append(i + 1);
-                stdTxt.Append(", " + reg[i]._paiddate.ToString("dd/MM/yyyy", ci));
                 stdTxt.Append(", " + reg[i]._regisdate.ToString("dd/MM/yyyy HH:mm", ci));
                 stdTxt.Append(", " + reg[i].GetRegisTransactionID());
                 stdTxt.Append(", " + Student.GetStudentID(reg[i]._studentID));
@@ -397,13 +321,10 @@ namespace BTS.Page
                 stdTxt.Append(", " + StringUtil.AddCSVDQuote(StringUtil.ConvertEducateLevel(reg[i]._studentLevel)));
                 stdTxt.Append(", " + reg[i]._btsCourseID );
                 stdTxt.Append(", " + StringUtil.AddCSVDQuote(reg[i]._courseName));
-                stdTxt.Append(", " + courseStart);
-                stdTxt.Append(", " + courseEnd);
                 stdTxt.Append(", " + reg[i]._discountedCost);
                 stdTxt.Append(", " + Registration.GetPaidMethodText(reg[i]._paidMethod.ToString()));
                 stdTxt.Append(", " + Registration.GetStatusText(reg[i]._status));
                 stdTxt.Append(", " + StringUtil.AddCSVDQuote(theUser._firstname + " " + theUser._surname));
-                stdTxt.Append(", " + reg[i]._courseType);
                 stdTxt.Append("\n");
 
                 if (i % 100 == 99) 
@@ -442,20 +363,16 @@ namespace BTS.Page
                 StringBuilder contentTxt = new StringBuilder();
                 contentTxt.AppendLine("<tr bgcolor=\"#CAE8EA\">");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"30px\" NOWRAP><font size=2><b>ลำดับ</b></font></th>");
-                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"80px\"><font size=2><b>วันที่รับชำระเงิน</b></font></th>");
-                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"80px\"><font size=2><b>วันที่สมัคร</b></font></th>");
+                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"80px\"><font size=2><b>วัน-เวลา</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"100px\"><font size=2><b>รหัสใบเสร็จ</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"150px\"><font size=2><b>นักเรียน</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"100px\"><font size=2><b>โรงเรียน</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"100px\"><font size=2><b>ระดับชั้น</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"300px\"><font size=2><b>คอร์ส</b></font></th>");
-                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"80px\"><font size=2><b>วันที่เริ่ม</b></font></th>");
-                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"80px\"><font size=2><b>วันที่สิ้นสุด</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"70px\"><font size=2><b>ราคาจ่าย</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"70px\"><font size=2><b>วิธีชำระเงิน</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"70px\"><font size=2><b>สถานะ</b></font></th>");
                 contentTxt.AppendLine("<th scope=\"col\" align=center width=\"150px\"><font size=2><b>ชื่อผู้สมัคร</b></font></th>");
-                contentTxt.AppendLine("<th scope=\"col\" align=center width=\"150px\"><font size=2><b>ประเภท</b></font></th>");
                 contentTxt.AppendLine("</tr>");
 
            
@@ -467,31 +384,19 @@ namespace BTS.Page
                     //sumAllCost += reg[i]._discountedCost;
 
                     AppUser theUser = userAllMap[reg[i]._username];
-                    
-                    String courseStart = "-";
-                    String courseEnd = "-";
-                    if (reg[i]._courseType == "คอร์สสด")
-                    {
-                        courseStart = reg[i]._courseStart.ToString("dd/MM/yyyy", ci);
-                        courseEnd = reg[i]._courseEnd.ToString("dd/MM/yyyy", ci);
-                    }
 
                     contentTxt.AppendLine("<tr>");
                     contentTxt.AppendLine("<td><font size=2>" + (i + 1) + "</font></td>");
-                    contentTxt.AppendLine("<td align=center><font size=2>" + reg[i]._paiddate.ToString("dd/MM/yyyy", ci) + "</font></td>");
                     contentTxt.AppendLine("<td align=center><font size=2>" + reg[i]._regisdate.ToString("dd/MM/yyyy HH:mm", ci) + "</font></td>");
                     contentTxt.AppendLine("<td align=center><font size=2>" + reg[i].GetRegisTransactionID() + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + reg[i]._studentFirstname + " " + reg[i]._studentSurname + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + reg[i]._studentSchool + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + StringUtil.ConvertEducateLevel(reg[i]._studentLevel) + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + reg[i]._btsCourseID + " " + reg[i]._courseName + "</font></td>");
-                    contentTxt.AppendLine("<td><font size=2>" + courseStart + "</font></td>");
-                    contentTxt.AppendLine("<td><font size=2>" + courseEnd + "</font></td>");
                     contentTxt.AppendLine("<td align=center><font size=2>" + StringUtil.Int2StrComma(reg[i]._discountedCost) + "</font></td>");
                     contentTxt.AppendLine("<td align=center><font size=2>" + Registration.GetPaidMethodText(reg[i]._paidMethod.ToString()) + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + Registration.GetStatusText(reg[i]._status) + "</font></td>");
                     contentTxt.AppendLine("<td><font size=2>" + theUser._firstname + " " + theUser._surname + "</font></td>");
-                    contentTxt.AppendLine("<td><font size=2>" + reg[i]._courseType + "</font></td>");
                     contentTxt.AppendLine("</tr>");
                 }
 
@@ -500,27 +405,27 @@ namespace BTS.Page
                 if (j == (maxpg - 1))
                 {
                     // success                        
-                    summaryTxt.AppendLine("<br><table><tr><td>");
-                    summaryTxt.AppendLine("<table width=\"300px\" align=left border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
+                    summaryTxt.AppendLine("<br>");
+                    summaryTxt.AppendLine("<table width=\"300px\" align=right border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
                     summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td colspan=3 align=center><b>สรุปยอดรับสมัคร</b></td></tr>");
                     summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td width=\"100px\" align=center><b>วิธีชำระเงิน</b></td><td width=\"100px\" align=center><b>รายการ</b></td><td width=\"100px\" align=center><b>ยอดรวม(บาท)</b></td></tr>");
-                    for (int k = 0; k < numPaidMethod.Length; k++)
-                    {
-                        summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
-                        summaryTxt.AppendLine("<td align=center>" + Registration.GetPaidMethodText(k.ToString()) + "</td>");
-                        summaryTxt.AppendLine("<td align=center>" + numPaidMethod[k] + "</td>");
-                        summaryTxt.AppendLine("<td align=right>" + StringUtil.Int2StrComma(sumCostByPaidMethod[k]) + "&nbsp&nbsp</td>");
-                        summaryTxt.AppendLine("</tr>");
-                    }
+                      for (int k=0;k<numPaidMethod.Length;k++) 
+                      {
+                          summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
+                          summaryTxt.AppendLine("<td align=center>"+Registration.GetPaidMethodText(k.ToString())+"</td>");
+                          summaryTxt.AppendLine("<td align=center>"+numPaidMethod[k]+"</td>");
+                          summaryTxt.AppendLine("<td align=right>"+StringUtil.Int2StrComma(sumCostByPaidMethod[k])+"&nbsp&nbsp</td>");
+                          summaryTxt.AppendLine("</tr>");
+                      }
                     summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
                     summaryTxt.AppendLine("<td align=center><b>รวมทั้งสิ้น</b></td>");
-                    summaryTxt.AppendLine("<td align=center><b>" + numSuccess + "</b></td>");
-                    summaryTxt.AppendLine("<td align=right><b>" + StringUtil.Int2StrComma(sumAllCost) + "</b>&nbsp&nbsp</td>");
+                    summaryTxt.AppendLine("<td align=center><b>"+ numSuccess +"</b></td>");
+                    summaryTxt.AppendLine("<td align=right><b>"+ StringUtil.Int2StrComma(sumAllCost) +"</b>&nbsp&nbsp</td>");
                     summaryTxt.AppendLine("</tr>");
-                    summaryTxt.AppendLine("</table>&nbsp");
+//                    summaryTxt.AppendLine("</table>");
                     // cancel
-                    //                    summaryTxt.AppendLine("<br>");
-                    summaryTxt.AppendLine("<table width=\"300px\" align=left border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
+//                    summaryTxt.AppendLine("<br>");
+//                    summaryTxt.AppendLine("<table width=\"300px\" align=right border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
                     summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td colspan=3 align=center><b>สรุปยอดยกเลิก</b></td></tr>");
                     summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td width=\"100px\" align=center><b>วิธีชำระเงิน</b></td><td width=\"100px\" align=center><b>รายการ</b></td><td width=\"100px\" align=center><b>ยอดรวม(บาท)</b></td></tr>");
                     for (int k = 0; k < numPaidMethodCancel.Length; k++)
@@ -538,69 +443,8 @@ namespace BTS.Page
                     summaryTxt.AppendLine("</tr>");
                     summaryTxt.AppendLine("</table>");
 
-                    summaryTxt.AppendLine("</td></tr>");
-
-                    // sum by course cate
-                    for (int m = 0; m < Config.COURSE_CATE.Length; m++)
-                    {
-
-                        String cate = Config.COURSE_CATE[m];
-                        Dictionary<string, Object> map = (Dictionary<string, object>)sumByCourseCate[cate];
-
-                        int[] _numByPaidMethod = (int[])map["numByPaidMethod"];
-                        int[] _sumCostByPaidMethod = (int[])map["sumCostByPaidMethod"];
-                        int _numAll = (int)map["numAll"];
-                        int _sumCostAll = (int)map["sumCostAll"];
-
-                        int[] _numByPaidMethodCancel = (int[])map["numByPaidMethodCancel"];
-                        int[] _sumCostByPaidMethodCancel = (int[])map["sumCostByPaidMethodCancel"];
-                        int _numAllCancel = (int)map["numAllCancel"];
-                        int _sumCostAllCancel = (int)map["sumCostAllCancel"];
-
-                            // success                        
-                            summaryTxt.AppendLine("<tr><td>");
-                            summaryTxt.AppendLine("<table width=\"300px\" align=left border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
-                            summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td colspan=3 align=center><b>สรุปยอดรับสมัคร " + cate + "</b></td></tr>");
-                            summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td width=\"100px\" align=center><b>วิธีชำระเงิน</b></td><td width=\"100px\" align=center><b>รายการ</b></td><td width=\"100px\" align=center><b>ยอดรวม(บาท)</b></td></tr>");
-                            for (int k = 0; k < _numByPaidMethod.Length; k++)
-                            {
-                                summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
-                                summaryTxt.AppendLine("<td align=center>" + Registration.GetPaidMethodText(k.ToString()) + "</td>");
-                                summaryTxt.AppendLine("<td align=center>" + _numByPaidMethod[k] + "</td>");
-                                summaryTxt.AppendLine("<td align=right>" + StringUtil.Int2StrComma(_sumCostByPaidMethod[k]) + "&nbsp&nbsp</td>");
-                                summaryTxt.AppendLine("</tr>");
-                            }
-                            summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
-                            summaryTxt.AppendLine("<td align=center><b>รวมทั้งสิ้น</b></td>");
-                            summaryTxt.AppendLine("<td align=center><b>" + _numAll + "</b></td>");
-                            summaryTxt.AppendLine("<td align=right><b>" + StringUtil.Int2StrComma(_sumCostAll) + "</b>&nbsp&nbsp</td>");
-                            summaryTxt.AppendLine("</tr>");
-                            summaryTxt.AppendLine("</table>&nbsp");
-
-                            // cancel
-                            summaryTxt.AppendLine("<table width=\"300px\" align=left border=1 cellpadding=0 cellspacing=0 bordercolor=\"#C1DAD7\" bgcolor=\"#FFFFFF\">");
-                            summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td colspan=3 align=center><b>สรุปยอดยกเลิก " + cate + "</b></td></tr>");
-                            summaryTxt.AppendLine(" <tr bgcolor=\"#CAE8EA\"><td width=\"100px\" align=center><b>วิธีชำระเงิน</b></td><td width=\"100px\" align=center><b>รายการ</b></td><td width=\"100px\" align=center><b>ยอดรวม(บาท)</b></td></tr>");
-                            for (int k = 0; k < _numByPaidMethodCancel.Length; k++)
-                            {
-                                summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
-                                summaryTxt.AppendLine("<td align=center>" + Registration.GetPaidMethodText(k.ToString()) + "</td>");
-                                summaryTxt.AppendLine("<td align=center>" + _numByPaidMethodCancel[k] + "</td>");
-                                summaryTxt.AppendLine("<td align=right>" + StringUtil.Int2StrComma(_sumCostByPaidMethodCancel[k]) + "&nbsp&nbsp</td>");
-                                summaryTxt.AppendLine("</tr>");
-                            }
-                            summaryTxt.AppendLine("<tr bgcolor=\"#FFFFFF\">");
-                            summaryTxt.AppendLine("<td align=center><b>รวมทั้งสิ้น</b></td>");
-                            summaryTxt.AppendLine("<td align=center><b>" + _numAllCancel + "</b></td>");
-                            summaryTxt.AppendLine("<td align=right><b>" + StringUtil.Int2StrComma(_sumCostAllCancel) + "</b>&nbsp&nbsp</td>");
-                            summaryTxt.AppendLine("</tr>");
-                            summaryTxt.AppendLine("</table>");
-
-                            summaryTxt.AppendLine("</td></tr>");
-
-                    }
-                    summaryTxt.AppendLine("</table>");
                 }
+
 
                 TextReader reader = new StreamReader(Config.PATH_APP_ROOT + "\\template\\report_daily_registration_print.htm");
                 String templateContent = reader.ReadToEnd();
@@ -644,30 +488,18 @@ namespace BTS.Page
 
                 string studentTxt = "<a href=\"StudentManage.aspx?actPage=view&targetID=" + reg[i]._studentID + "\">" + reg[i]._studentFirstname + " " + reg[i]._studentSurname + "</a>";
                 string courseTxt = "<a href=\"CourseManage.aspx?actPage=view&targetID="+reg[i]._courseID+"\">" + reg[i]._btsCourseID + " " + reg[i]._courseName + "</a>";
-                String courseStart = "-";
-                String courseEnd = "-";
-                if (reg[i]._courseType == "คอร์สสด")
-                {
-                    courseStart = reg[i]._courseStart.ToString("dd/MM/yyyy", ci);
-                    courseEnd = reg[i]._courseEnd.ToString("dd/MM/yyyy", ci);
-                }
-                              
                 outBuf.Append("<tr>");
                 outBuf.Append("<th scope=\"row\" abbr=\"Model\" " + bgclass[i % 2, 0] + ">" + (i + 1) + "</th>");
-                outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + reg[i]._paiddate.ToString("dd/MM/yyyy", ci) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + reg[i]._regisdate.ToString("dd/MM/yyyy HH:mm", ci) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + " align=center  >" + reg[i].GetRegisTransactionID() + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + studentTxt + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + reg[i]._studentSchool + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + StringUtil.ConvertEducateLevel( reg[i]._studentLevel) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + courseTxt + "&nbsp</td>");
-                outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + courseStart + "&nbsp</td>");
-                outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + courseEnd + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + " align=right >" + StringUtil.Int2StrComma(reg[i]._discountedCost) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + Registration.GetPaidMethodText(reg[i]._paidMethod.ToString()) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + Registration.GetStatusText(reg[i]._status) + "&nbsp</td>");
                 outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + theUser._firstname + " " + theUser._surname + "&nbsp</td>");
-                outBuf.Append("<td " + bgclass[i % 2, 1] + "  >" + reg[i]._courseType + "&nbsp</td>");
                 outBuf.Append("</tr>\n");
             }
 

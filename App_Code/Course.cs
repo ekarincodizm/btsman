@@ -31,7 +31,6 @@ namespace BTS.Entity
         public string _courseName;
         public string _shortName;
         public string _courseDesc;
-        public string _courseType;
         public int _roomID;
         public int _teacherID;
         public int _paidGroupID;
@@ -114,8 +113,6 @@ namespace BTS.Entity
                                       break;
                     case "course_desc": course._courseDesc = reader.GetString(i);
                                       break;
-                    case "course_type": course._courseType = reader.GetString(i);
-                                      break;
                     case "room_id": course._roomID = reader.GetInt32(i);
                                       break;
                     case "teacher_id": course._teacherID = reader.GetInt32(i);
@@ -180,8 +177,8 @@ namespace BTS.Entity
 
         public override bool AddToDB(DBManager db)
         {
-            String[] key = { "bts_course_id", "course_name", "short_name", "course_desc", "course_type", "room_id", "teacher_id", "paid_group_id", "category", "start_date", "end_date", "day_of_week", "open_time", "cost", "seat_limit", "bank_regis_limit", "image", "is_active" };
-            String[] val = { _btsCourseID, _courseName, _shortName, _courseDesc, _courseType, _roomID.ToString(), _teacherID.ToString(),  _paidGroupID.ToString(), _category
+            String[] key = { "bts_course_id", "course_name", "short_name", "course_desc", "room_id", "teacher_id", "paid_group_id", "category", "start_date", "end_date", "day_of_week", "open_time", "cost", "seat_limit", "bank_regis_limit", "image", "is_active" };
+            String[] val = { _btsCourseID, _courseName, _shortName, _courseDesc, _roomID.ToString(), _teacherID.ToString(),  _paidGroupID.ToString(), _category
                                ,StringUtil.ConvertYearToEng(_startdate, "yyyy/MM/dd"), StringUtil.ConvertYearToEng(_enddate, "yyyy/MM/dd"), _dayOfWeek, _opentime
                                ,_cost.ToString(), _seatLimit.ToString(), _bankRegisLimit.ToString(), _img, _isActive?"0":"1" };
             return (db.Insert("course", key, val) > 0) ? true : false;
@@ -190,8 +187,8 @@ namespace BTS.Entity
         public override bool UpdateToDB(DBManager db)
         {
             if (_courseID <= 0) return false;
-            String[] key = { "bts_course_id", "course_name", "short_name", "course_desc", "course_type", "room_id", "teacher_id", "paid_group_id", "category", "start_date", "end_date", "day_of_week", "open_time", "cost", "seat_limit", "bank_regis_limit", "image", "is_active" };
-            String[] val = { _btsCourseID, _courseName, _shortName, _courseDesc, _courseType, _roomID.ToString(), _teacherID.ToString(),  _paidGroupID.ToString(), _category
+            String[] key = { "bts_course_id", "course_name", "short_name", "course_desc", "room_id", "teacher_id", "paid_group_id", "category", "start_date", "end_date", "day_of_week", "open_time", "cost", "seat_limit", "bank_regis_limit", "image", "is_active" };
+            String[] val = { _btsCourseID, _courseName, _shortName, _courseDesc, _roomID.ToString(), _teacherID.ToString(),  _paidGroupID.ToString(), _category
                                ,StringUtil.ConvertYearToEng(_startdate, "yyyy/MM/dd"), StringUtil.ConvertYearToEng(_enddate, "yyyy/MM/dd"), _dayOfWeek, _opentime 
                                ,_cost.ToString(), _seatLimit.ToString(), _bankRegisLimit.ToString(), _img, _isActive?"0":"1" };
             return (db.Update("course", key, val, "course_id=" + _courseID) > 0) ? true : false;
@@ -294,8 +291,8 @@ namespace BTS.Entity
 
         public override string ToString()
         {
-            return String.Format("Course [course_id={0}, bts_course_id={1}, course_name={2}, course_desc={3}, course_desc={4}, room_id={5}, teacher_id={6}, paid_group_id={7}, start_date={8}, end_date={9}, day_of_week={10}, open_time={11}, cost={12}, seat_limit={13}, bank_regis_limit={14}, img={15}, is_active={16}]"
-                                , _courseID, _btsCourseID, _courseName, _courseDesc, _courseType, _roomID.ToString(), _teacherID.ToString(), _paidGroupID.ToString() 
+            return String.Format("Course [course_id={0}, bts_course_id={1}, course_name={2}, course_desc={3}, room_id={4}, teacher_id={5}, paid_group_id={6}, start_date={7}, end_date={8}, day_of_week={9}, open_time={10}, cost={11}, seat_limit={12}, bank_regis_limit={13}, img={14}, is_active={15}]"
+                                , _courseID, _btsCourseID, _courseName, _courseDesc, _roomID.ToString(), _teacherID.ToString(), _paidGroupID.ToString() 
                                , StringUtil.ConvertYearToEng(_startdate, "yyyy/MM/dd"), StringUtil.ConvertYearToEng(_enddate, "yyyy/MM/dd"), _dayOfWeek, _opentime
                                , _cost.ToString(), _seatLimit.ToString(), _bankRegisLimit.ToString(), _img, _isActive ? "0" : "1");
         }

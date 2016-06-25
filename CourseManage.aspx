@@ -155,8 +155,6 @@
         location.href = 'RegistrationManage.aspx?actPage=edit&targetID=' + regisId;
 
     }
-
-
 </script>
 
 
@@ -175,54 +173,30 @@
 
 <% } else if ((actPage.Equals("add")) || (actPage.Equals("edit"))) { %>
 
-
-<script type="text/javascript" >
-    function refreshStartEndDate() {
-        val = document.getElementById("course_type").value;
-        if (val == "คอร์ส DVD") {
-            document.getElementById("startend_row").style.display = 'none';
-        } else {
-            document.getElementById("startend_row").style.display = '';
-        }
-    }
-
-</script>
-
 <!-- Add/Edit -->
 <table id="Table1" cellspacing="0" >
 <caption>คอร์ส: <%=actPage%> </caption>
 
   <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ชื่อคอร์ส</th>    
+    <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ชื่อคอร์ส</th>    
     <th scope="row" class="spec" ><input type=text id="course_name" name="course_name" class="txtbox1" style="width:300px" value="<%=theCourse!=null?theCourse._courseName:""%>" /></th>
   </tr>
   <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>รหัสคอร์ส</th>    
+    <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>รหัสคอร์ส</th>    
     <th scope="row" class="spec" ><input type=text id="bts_course_id" name="bts_course_id" class="txtbox1" style="width:100px" value="<%=theCourse!=null?theCourse._btsCourseID:""%>" /></th>
   </tr>
   
   <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ชื่อย่อ</th>    
+    <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ชื่อย่อ</th>    
     <th scope="row" class="spec" ><input type=text id="short_name" name="short_name" class="txtbox1" maxlength="15" style="width:100px" value="<%=theCourse!=null?theCourse._shortName:""%>" /></th>
   </tr>
-
+  
   <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>Type</th>    
-    <th scope="row" class="spec" >
-        <select id="course_type" name="course_type" class="txtbox1" style="width:160px" onchange="refreshStartEndDate()">
-            <option value="คอร์สสด" <%=theCourse._courseType=="คอร์สสด" ? "selected" : "" %> >คอร์สสด</option>
-            <option value="คอร์ส DVD" <%=theCourse._courseType=="คอร์ส DVD" ? "selected" : "" %> >คอร์ส DVD</option>
-        </select>
-    </th>
-  </tr>
-   
-  <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>รายละเอียด</th>    
+    <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>รายละเอียด</th>    
     <th scope="row" class="spec"><textarea class="txtarea1" id="course_desc" name="course_desc" style="width:300px;height:70px"><%=theCourse != null ? theCourse._courseDesc : ""%></textarea></th>    
   </tr>
-
   <tr>
-    <th scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ประเภท</th>    
+    <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ประเภท</th>    
     <th scope="row" class="spec" >
     <select id="category" name="category" class="txtbox1" style="width:160px" >
 <% 
@@ -282,7 +256,7 @@
   </tr>
 
   
-  <tr id="startend_row">
+  <tr>
     <link rel="stylesheet" type="text/css" href="js/epoch_v106_en/epoch_styles.css" />
     <script type="text/javascript" src="js/epoch_v106_en/epoch_classes.js"></script>
     <script type="text/javascript">
@@ -291,9 +265,8 @@
         window.onload = function() {
             // bas_cal = new Epoch('epoch_basic', 'flat', document.getElementById('basic_container'));
             dp_cal = new Epoch('epoch_popup', 'popup', document.getElementById('startdate'));
-            dp_cal2 = new Epoch('epoch_popup', 'popup', document.getElementById('enddate'));
+            dp_cal2 = new Epoch('epoch_popup', 'popup', document.getElementById('enddate'));            
             //  ms_cal = new Epoch('epoch_multi', 'flat', document.getElementById('multi_container'), true);
-            refreshStartEndDate();
         };
     </script>
     <td scope="col" class="formTitle" width="250px" valign="top" NOWRAP>ช่วงเวลาการสอน</th>    
@@ -349,8 +322,6 @@
     </p></td>
   </tr>  
 </table>
-
-
 <!-------------------------------------------------------------------------------------------------------------->                
 <% } else if (actPage.Equals("init_print")) { %>
 <script type="text/javascript" >

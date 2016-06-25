@@ -630,35 +630,17 @@
   </tr><td>&nbsp</td></tr>  
   <tr >
     <td>
-                    <link rel="stylesheet" type="text/css" href="js/epoch_v106_en/epoch_styles.css" />
-                    <script type="text/javascript" src="js/epoch_v106_en/epoch_classes.js"></script>
-                    <script type="text/javascript">
-                        /*You can also place this code in a separate file and link to it like epoch_classes.js*/
-                        var dp_cal, dp_cal2;
-                        window.onload = function () {
-                            // bas_cal = new Epoch('epoch_basic', 'flat', document.getElementById('basic_container'));
-                            dp_cal = new Epoch('epoch_popup', 'popup', document.getElementById('paid_date'));
-                            //  ms_cal = new Epoch('epoch_multi', 'flat', document.getElementById('multi_container'), true);
-                        };
-                    </script>
                     <table border=0>
-                    <tr>
-                        <td>ชำระเงินผ่านทาง</td>
-                        <td colspan="2">
-                            <select name="paid_method" id="paid_method" class="txtbox1">
-                                <option value=0><%= Registration.GetPaidMethodText("0")%></option>
-                                <option value=1><%= Registration.GetPaidMethodText("1")%></option>
-                                <option value=2><%= Registration.GetPaidMethodText("2")%></option>
-                                <option value=3><%= Registration.GetPaidMethodText("3")%></option>
-                                <option value=4><%= Registration.GetPaidMethodText("4")%></option>
-                                <option value=5><%= Registration.GetPaidMethodText("5")%></option>
-                            </select>
-                        </td>
-                      <td>วันที่รับชำระเงิน</td>
-                      <td>
-                            <input id="paid_date" name="paid_date" type="text" class="txtbox1" width="150px" readonly value="<%=DateTime.Today.ToString("dd/MM/yyyy", ci)%>"/>                           
-                      </td>
-                    </tr>  
+                    <tr><td>ชำระเงินผ่านทาง</td>
+                    <td colspan="2">
+                        <select name="paid_method" id="paid_method" class="txtbox1">
+                            <option value=0><%= Registration.GetPaidMethodText("0")%></option>
+                            <option value=1><%= Registration.GetPaidMethodText("1")%></option>
+                            <option value=2><%= Registration.GetPaidMethodText("2")%></option>
+                            <option value=3><%= Registration.GetPaidMethodText("3")%></option>
+                            <option value=4><%= Registration.GetPaidMethodText("4")%></option>
+                        </select>
+                    </td></tr>  
                     <tr>
                         <td align=left><b>คอร์ส</b></td>
                         <td align=center><b>หมายเลขที่นั่ง</b></td>

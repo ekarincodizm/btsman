@@ -180,8 +180,6 @@ namespace BTS.Page
             reg._username = user._username;
             reg._paidMethod = Int32.Parse(Request["paid_method"]);
             reg._branchID = user._branchID;
-            reg._paiddate = StringUtil.getDate(Request["paid_date"]);
-
             // seat
             for (int i = 0; i < Request.Form.AllKeys.Length; i++)
             {
